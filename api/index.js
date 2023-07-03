@@ -91,6 +91,7 @@ app.post("/cars", (req, res) => {
     brand,
     model,
     licensePlate,
+    addedPhotos,
     type,
     capacity,
     fuel,
@@ -106,6 +107,7 @@ app.post("/cars", (req, res) => {
       brand,
       model,
       licensePlate,
+      addedPhotos,
       type,
       capacity,
       fuel,
@@ -139,12 +141,60 @@ app.post("/upload-by-link", async (req, res) => {
 
 const photosMiddleware = multer({ dest: "uploads/" });
 app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
+  const uploadedFiles = [];
   for (let i = 0; i < req.files.length; i++) {
     const { path, originalname } = req.files[i];
     const parts = originalname.split(".");
-    const newPath = path;
-    fs.renameSync(path);
+    const ext = parts[parts.length - 1];
+    const newPath = path + "." + ext;
+    fs.renameSync(path, newPath);
+    uploadedFiles.push(newPath.replace("uploads\\", ""));
   }
-  res.json(req.files);
+  res.json(uploadedFiles);
+});
+
+app.get("/carlist/:id", async (req, res) => {
+  const { id } = req.params;
+  res.json(await Car.findById(id));
+});
+
+app.put("/carlist", async (req, res) => {
+  const { token } = req.cookies;
+  const {
+    id,
+    brand,
+    model,
+    licensePlate,
+    addedPhotos,
+    type,
+    capacity,
+    fuel,
+    gearbox,
+    ac,
+    minimumDriverAge,
+    price,
+  } = req.body;
+
+  jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+    if (err) throw err;
+    const carDoc = await Car.findById(id);
+    if (userData.id === carDoc.owner.toString()) {
+      carDoc.set({
+        brand,
+        model,
+        licensePlate,
+        addedPhotos,
+        type,
+        capacity,
+        fuel,
+        gearbox,
+        ac,
+        minimumDriverAge,
+        price,
+      });
+      await carDoc.save();
+      res.json("ok");
+    }
+  });
 });
 app.listen(4000);

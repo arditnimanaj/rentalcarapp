@@ -27,6 +27,7 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="carlist" element={<CarsList />} />
           <Route path="newcar" element={<NewCar />} />
+          <Route path="carlist/:id" element={<NewCar />} />
         </Route>
       </Routes>
     </UserContextProvider>

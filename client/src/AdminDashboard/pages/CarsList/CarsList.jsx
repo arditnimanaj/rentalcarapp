@@ -5,12 +5,8 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
-function buttonEdit() {
-  console.log("Edit");
-}
-function buttonDelete() {
-  console.log("delete");
-}
+import { Link, useParams } from "react-router-dom";
+
 const columns = [
   { field: "id", headerName: "ID", width: 130 },
   { field: "brand", headerName: "Brand", width: 130 },
@@ -55,12 +51,16 @@ const columns = [
     headerName: "Action",
     width: 100,
     renderCell: (params) => {
+      const id = params.row.id;
+
       return (
         <>
-          <button className="m-2" onClick={buttonEdit}>
-            <ModeEditOutlineIcon />
-          </button>
-          <button onClick={buttonDelete}>
+          <Link to={"/account/carlist/" + id}>
+            <button className="m-2">
+              <ModeEditOutlineIcon />
+            </button>
+          </Link>
+          <button>
             <DeleteOutlineIcon />
           </button>
         </>
@@ -70,6 +70,8 @@ const columns = [
 ];
 
 export default function CarsList() {
+  const { id } = useParams();
+
   const [ownerCars, setOwnerCars] = useState([]);
   const [rows, setRows] = useState([]);
 
@@ -96,6 +98,9 @@ export default function CarsList() {
   return (
     <div className="carsList">
       <DataGrid
+        columnVisibilityModel={{
+          id: false,
+        }}
         rows={rows}
         disableRowSelectionOnClick
         columns={columns}

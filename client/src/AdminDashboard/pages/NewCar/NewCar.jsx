@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./newcar.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TextField from "@mui/material/TextField";
-import { Form, Navigate } from "react-router-dom";
+import { Form, Navigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -23,51 +23,33 @@ import Input from "@mui/material/Input";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import PhotosUploader from "../../components/photosUploader/photosUploader";
 
 export default function NewCar() {
-  const [brand, setBrand] = useState("");
-  const [model, setModel] = useState("");
-  const [licensePlate, setLicensePlate] = useState("");
-  const [type, setType] = useState("");
-  const [capacity, setCapacity] = useState(5);
-  const [fuel, setFuel] = useState("");
-  const [gearbox, setGearbox] = useState("");
-  const [ac, setAc] = useState(true);
-  const [addedPhotos, setAddedPhotos] = useState([]);
-  const [photoLink, setPhotoLink] = useState("");
-  const [minimumDriverAge, setMinimumDriverAge] = useState(18);
-  const [price, setPrice] = useState("");
-  const [redirect, setRedirect] = useState("");
+  // verifiko nese jeni duke update ose kriju nje veture te re
 
-  async function newCar(ev) {
-    ev.preventDefault();
-    await axios.post("/cars", {
-      brand,
-      model,
-      licensePlate,
-      type,
-      capacity,
-      fuel,
-      gearbox,
-      ac,
-      minimumDriverAge,
-      price,
+  const { id } = useParams();
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    axios.get("/carlist/" + id).then((response) => {
+      const { data } = response;
+      console.log(data);
+      setBrand(data.brand);
+      setModel(data.model);
+      setLicensePlate(data.licensePlate);
+      setType(data.type);
+      setCapacity(data.capacity);
+      setFuel(data.fuel);
+      setGearbox(data.gearbox);
+      setAc(data.ac);
+      setMinimumDriverAge(data.minimumDriverAge);
+      setPrice(data.price);
+      setAddedPhotos(data.addedPhotos);
     });
 
-    //resetting form after submit
-    // setBrand("");
-    // setModel("");
-    // setLicensePlate("");
-    // setType("");
-    // setCapacity("");
-    // setFuel("");
-    // setGearbox("");
-    // setAc("");
-    // setMinimumDriverAge("");
-    // setPrice("");
-
-    //popup after adding new car
-    toast.success("A new car has been added!", {
+    toast.info("You are editing a car", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -77,7 +59,22 @@ export default function NewCar() {
       progress: undefined,
       theme: "colored",
     });
-  }
+  }, [id]);
+
+  const [brand, setBrand] = useState("");
+  const [model, setModel] = useState("");
+  const [licensePlate, setLicensePlate] = useState("");
+  const [type, setType] = useState("");
+  const [capacity, setCapacity] = useState(5);
+  const [fuel, setFuel] = useState("");
+  const [gearbox, setGearbox] = useState("");
+  const [ac, setAc] = useState(true);
+  const [minimumDriverAge, setMinimumDriverAge] = useState("");
+  const [price, setPrice] = useState("");
+  const [redirect, setRedirect] = useState("");
+
+  const [addedPhotos, setAddedPhotos] = useState([]);
+  const [photoLink, setPhotoLink] = useState("");
 
   async function addPhotoByLink(ev) {
     if (photoLink) {
@@ -103,11 +100,62 @@ export default function NewCar() {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
-        const { data: fileName } = response;
+        const { data: fileNames } = response;
         setAddedPhotos((prev) => {
-          return [...prev, fileName];
+          return [...prev, ...fileNames];
         });
       });
+  }
+  async function newCar(ev) {
+    ev.preventDefault();
+    const carData = {
+      brand,
+      model,
+      licensePlate,
+      type,
+      capacity,
+      addedPhotos,
+      fuel,
+      gearbox,
+      ac,
+      minimumDriverAge,
+      price,
+    };
+    if (id) {
+      // updating existing car
+      await axios.put("/carlist", {
+        id,
+        ...carData,
+      });
+    } else {
+      //adding new car
+      await axios.post("/cars", carData);
+
+      //popup after adding new car
+      toast.success("A new car has been added!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+
+    //resetting form after submit
+    // setBrand("");
+    // setModel("");
+    // setLicensePlate("");
+    // setType("");
+    // setCapacity("");
+    // setFuel("");
+    // setGearbox("");
+    // setAc("");
+    // setMinimumDriverAge("");
+    // setPrice("");
+    // setAddedPhotos([]);
   }
 
   return (
@@ -126,7 +174,7 @@ export default function NewCar() {
       />
       {/* Same as */}
       <ToastContainer />
-      <div className="mt-2 w-full justify-between">
+      <div className="mt-2 ml-auto w-full justify-between">
         <h1 className="font-bold items-center" style={{ color: "#0A6EBD" }}>
           <AddCircleIcon
             fontSize="large"
@@ -311,6 +359,7 @@ export default function NewCar() {
                   ),
                 }}
               />
+
               <span className="font-bold" style={{ color: "#0A6EBD" }}>
                 Photos
               </span>

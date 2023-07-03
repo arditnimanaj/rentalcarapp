@@ -27,6 +27,7 @@ import axios from "axios";
 export default function Sidebar() {
   const { user, setUser } = useContext(UserContext);
   const [redirect, setRedirect] = useState(false);
+
   const navigate = useNavigate();
 
   async function logOut() {
