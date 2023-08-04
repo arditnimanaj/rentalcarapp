@@ -70,8 +70,6 @@ const columns = [
 ];
 
 export default function CarsList() {
-  const { id } = useParams();
-
   const [ownerCars, setOwnerCars] = useState([]);
   const [rows, setRows] = useState([]);
 

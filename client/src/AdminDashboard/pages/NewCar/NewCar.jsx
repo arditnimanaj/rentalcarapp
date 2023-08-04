@@ -3,7 +3,7 @@ import "./newcar.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TextField from "@mui/material/TextField";
-import { Form, Navigate, useParams } from "react-router-dom";
+import { Form, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -29,37 +29,7 @@ export default function NewCar() {
   // verifiko nese jeni duke update ose kriju nje veture te re
 
   const { id } = useParams();
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    axios.get("/carlist/" + id).then((response) => {
-      const { data } = response;
-      console.log(data);
-      setBrand(data.brand);
-      setModel(data.model);
-      setLicensePlate(data.licensePlate);
-      setType(data.type);
-      setCapacity(data.capacity);
-      setFuel(data.fuel);
-      setGearbox(data.gearbox);
-      setAc(data.ac);
-      setMinimumDriverAge(data.minimumDriverAge);
-      setPrice(data.price);
-      setAddedPhotos(data.addedPhotos);
-    });
-
-    toast.info("You are editing a car", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  }, [id]);
+  const navigate = useNavigate();
 
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
@@ -75,6 +45,38 @@ export default function NewCar() {
 
   const [addedPhotos, setAddedPhotos] = useState([]);
   const [photoLink, setPhotoLink] = useState("");
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    axios.get("/carlist/" + id).then((response) => {
+      const { data } = response;
+
+      setBrand(data.brand);
+      setModel(data.model);
+      setLicensePlate(data.licensePlate);
+      setType(data.type);
+      setCapacity(data.capacity);
+      setFuel(data.fuel);
+      setGearbox(data.gearbox);
+      setAc(data.ac);
+      setMinimumDriverAge(data.minimumDriverAge);
+      setPrice(data.price);
+      setAddedPhotos(data.addedPhotos);
+
+      toast.info("You are editing a car" + data.brand, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    });
+  }, [id]);
 
   async function addPhotoByLink(ev) {
     if (photoLink) {
@@ -106,6 +108,7 @@ export default function NewCar() {
         });
       });
   }
+
   async function newCar(ev) {
     ev.preventDefault();
     const carData = {
@@ -121,12 +124,14 @@ export default function NewCar() {
       minimumDriverAge,
       price,
     };
+
     if (id) {
       // updating existing car
       await axios.put("/carlist", {
         id,
         ...carData,
       });
+      navigate("/account/carlist");
     } else {
       //adding new car
       await axios.post("/cars", carData);
@@ -172,8 +177,6 @@ export default function NewCar() {
         pauseOnHover
         theme="colored"
       />
-      {/* Same as */}
-      <ToastContainer />
       <div className="mt-2 ml-auto w-full justify-between">
         <h1 className="font-bold items-center" style={{ color: "#0A6EBD" }}>
           <AddCircleIcon

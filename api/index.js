@@ -21,7 +21,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:5173",
+    origin: "http://127.0.0.1:5173",
   })
 );
 
@@ -32,12 +32,13 @@ app.get("/test", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { userName, email, password, isNewUser } = req.body;
   try {
     const userDoc = await User.create({
-      name,
+      userName,
       email,
       password: bcrypt.hashSync(password, bcryptSalt),
+      isNewUser,
     });
     res.json(userDoc);
   } catch (e) {
@@ -52,11 +53,14 @@ app.post("/login", async (req, res) => {
     const passOk = bcrypt.compareSync(password, userDoc.password);
     if (passOk) {
       jwt.sign(
-        { id: userDoc._id, email: userDoc.email, name: userDoc.name },
+        { id: userDoc._id, email: userDoc.email, userName: userDoc.userName },
         jwtSecret,
         {},
         (err, token) => {
-          if (err) throw err;
+          if (err) {
+            console.error(err);
+            return res.status(500).json({ message: "internal error" });
+          }
           res.cookie("token", token).json(userDoc);
         }
       );
@@ -73,8 +77,10 @@ app.get("/profile", (req, res) => {
   if (token) {
     jwt.verify(token, jwtSecret, {}, async (err, user) => {
       if (err) throw err;
-      const { name, email, _id } = await User.findById(user.id);
-      res.json({ name, email, _id });
+      // const profile = await User.findById(user.id);
+      // console.log("Profili" + profile);
+      const { userName, email, _id, isNewUser } = await User.findById(user.id);
+      res.json({ userName, email, _id, isNewUser });
     });
   } else {
     res.json(null);

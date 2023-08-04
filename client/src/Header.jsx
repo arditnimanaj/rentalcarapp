@@ -32,7 +32,7 @@ export default function Header() {
       {!!user && (
         <Link to={user ? "/account" : "/login"}>
           <div className="">
-            <p>{user?.name}</p>
+            <p>{user?.userName}</p>
           </div>
         </Link>
       )}

@@ -3,16 +3,19 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function RegisterPage() {
-  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isNewUser, setIsNewUser] = useState(true);
+
   async function registerUser(ev) {
     ev.preventDefault();
     try {
       await axios.post("/register", {
-        name,
+        userName,
         email,
         password,
+        isNewUser,
       });
       alert("Registration is complete!");
     } catch (e) {
@@ -28,8 +31,8 @@ export default function RegisterPage() {
           <input
             type="text"
             placeholder="name"
-            value={name}
-            onChange={(ev) => setName(ev.target.value)}
+            value={userName}
+            onChange={(ev) => setUserName(ev.target.value)}
           />
           <input
             type="email"

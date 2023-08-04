@@ -7,11 +7,12 @@ import RegisterPage from "./pages/RegisterPage";
 import axios from "axios";
 import { UserContextProvider } from "./UserContext";
 import AccountLayout from "./AdminDashboard/pages/AccountLayout";
-import Home from "./AdminDashboard/pages/home/Home";
+import Home from "./AdminDashboard/pages/Home/Home";
 import CarsList from "./AdminDashboard/pages/CarsList/CarsList";
 import NewCar from "./AdminDashboard/pages/NewCar/NewCar";
+import ProfilePage from "./AdminDashboard/pages/ProfilePage/ProfilePage";
 
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "http://127.0.0.1:4000";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="" element={<Home />} />
           <Route path="carlist" element={<CarsList />} />
           <Route path="newcar" element={<NewCar />} />
+          <Route path="profile" element={<ProfilePage />} />
           <Route path="carlist/:id" element={<NewCar />} />
         </Route>
       </Routes>
