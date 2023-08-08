@@ -77,13 +77,61 @@ app.get("/profile", (req, res) => {
   if (token) {
     jwt.verify(token, jwtSecret, {}, async (err, user) => {
       if (err) throw err;
-      // const profile = await User.findById(user.id);
-      // console.log("Profili" + profile);
-      const { userName, email, _id, isNewUser } = await User.findById(user.id);
-      res.json({ userName, email, _id, isNewUser });
+      const {
+        userName,
+        email,
+        _id,
+        isNewUser,
+        businessName,
+        phoneNumber,
+        paymentMethods,
+        pickupLocations,
+        businessProfilePicture,
+      } = await User.findById(user.id);
+      const profile = await User.findById(user.id);
+      res.json({
+        userName,
+        email,
+        _id,
+        isNewUser,
+        businessName,
+        phoneNumber,
+        paymentMethods,
+        pickupLocations,
+        businessProfilePicture,
+      });
     });
   } else {
     res.json(null);
+  }
+});
+
+app.put("/update-profile", async (req, res) => {
+  const { token } = req.cookies;
+  const {
+    businessName,
+    phoneNumber,
+    paymentMethods,
+    pickupLocations,
+    businessProfilePicture,
+    businessSocialMedia,
+  } = req.body;
+  if (token) {
+    jwt.verify(token, jwtSecret, {}, async (err, user) => {
+      if (err) throw err;
+      const profile = await User.findById(user.id);
+      profile.set({
+        isNewUser: false,
+        businessName,
+        phoneNumber,
+        paymentMethods,
+        pickupLocations,
+        businessProfilePicture,
+        businessSocialMedia,
+      });
+      await profile.save();
+      res.json(profile);
+    });
   }
 });
 

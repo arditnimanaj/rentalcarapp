@@ -23,7 +23,6 @@ import Input from "@mui/material/Input";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import PhotosUploader from "../../components/photosUploader/photosUploader";
 
 export default function NewCar() {
   // verifiko nese jeni duke update ose kriju nje veture te re
@@ -65,16 +64,19 @@ export default function NewCar() {
       setPrice(data.price);
       setAddedPhotos(data.addedPhotos);
 
-      toast.info("You are editing a car" + data.brand, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toast.info(
+        "You are editing " + data.brand + " me targa " + data.licensePlate,
+        {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        }
+      );
     });
   }, [id]);
 
