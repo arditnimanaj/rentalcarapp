@@ -74,7 +74,7 @@ export default function CarsList() {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
-    axios.get("/ownerCars").then((response) => {
+    axios.get("/user-carlist").then((response) => {
       setOwnerCars(response.data);
     });
   }, []);

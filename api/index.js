@@ -88,7 +88,7 @@ app.get("/profile", (req, res) => {
         pickupLocations,
         businessProfilePicture,
       } = await User.findById(user.id);
-      const profile = await User.findById(user.id);
+
       res.json({
         userName,
         email,
@@ -174,7 +174,7 @@ app.post("/cars", (req, res) => {
   });
 });
 
-app.get("/ownerCars", (req, res) => {
+app.get("/user-carlist", (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
     if (err) throw err;
@@ -207,12 +207,12 @@ app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
   res.json(uploadedFiles);
 });
 
-app.get("/carlist/:id", async (req, res) => {
+app.get("/user-carlist/:id", async (req, res) => {
   const { id } = req.params;
   res.json(await Car.findById(id));
 });
 
-app.put("/carlist", async (req, res) => {
+app.put("/user-carlist", async (req, res) => {
   const { token } = req.cookies;
   const {
     id,
@@ -251,4 +251,9 @@ app.put("/carlist", async (req, res) => {
     }
   });
 });
+
+app.get("/allCars", async (req, res) => {
+  res.json(await Car.find());
+});
+
 app.listen(4000);

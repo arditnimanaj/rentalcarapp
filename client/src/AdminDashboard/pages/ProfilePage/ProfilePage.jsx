@@ -36,6 +36,7 @@ const MenuProps = {
     },
   },
 };
+
 const cityNames = [
   "Prishtinë",
   "Aeroporti Adem Jashari",
@@ -72,7 +73,7 @@ export default function ProfilePage() {
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [pickupLocations, setPickupLocations] = useState([]);
   const [businessProfilePicture, setBusinessProfilePicture] = useState("");
-  const [businessSocialMedia, setBusinessSocialMedia] = useState("");
+  const [businessSocialMedia, setBusinessSocialMedia] = useState([]);
 
   const handleCheckbox = (event) => {
     const value = event.target.value;
