@@ -256,4 +256,13 @@ app.get("/allCars", async (req, res) => {
   res.json(await Car.find());
 });
 
+app.get("/filteredCars", async (req, res) => {
+  const cars = await Car.find().populate({
+    path: "owner",
+    match: { pickupLocations: "Istog" },
+    select: "pickupLocations",
+  });
+  res.json(cars);
+});
+
 app.listen(4000);
