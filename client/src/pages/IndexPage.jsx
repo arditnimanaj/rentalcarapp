@@ -2,27 +2,34 @@ import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { DatePicker } from "antd";
+import moment from "moment";
 
+const { RangePicker } = DatePicker;
 export default function IndexPage() {
   const [cars, setCars] = useState([]);
-  useEffect(() => {
-    axios.get("/filteredCars").then((response) => {
-      console.log(response);
-    });
-    axios.get("/allCars").then((response) => {
-      setCars(response.data);
-      // console.log(cars);
-    });
-  }, []);
-  const [selectedDateRange, setSelectedDateRange] = useState([null, null]);
+  // useEffect(() => {
+  //   // axios.get("/filteredCars").then((response) => {
+  //   //   console.log(response);
+  //   // });
+  //   axios.get("/allCars").then((response) => {
+  //     setCars(response.data);
+  //     // console.log(cars);
+  //   });
+  // }, []);
 
-  const handleDateChange = (newValue) => {
-    setSelectedDateRange(newValue);
-    console.log(selectedDateRange);
-  };
+  function showValues(values) {
+    const fromDate = moment(values[0].$d).format("MMM DD YYYY HH:mm");
+    const toDate = moment(values[1].$d).format("MMM DD YYYY HH:mm");
+
+    axios.post("/allCars", { fromDate, toDate }).then((response) => {
+      setCars(response.data);
+    });
+  }
 
   return (
     <>
+      <RangePicker onChange={showValues} showTime={false}></RangePicker>
       <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 p-2">
         {cars.length > 0 &&
           cars.map((car) => (

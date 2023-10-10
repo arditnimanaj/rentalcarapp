@@ -7,11 +7,13 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const User = require("./models/user.js");
+const Booking = require("./models/booking.js");
 const Car = require("./models/car.js");
 const imageDownloader = require("image-downloader");
 const multer = require("multer");
 const fs = require("fs");
-
+const { userInfo } = require("os");
+const moment = require("moment");
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = "asdfguiwrtjwnfi2343t4njsdf3";
 
@@ -252,17 +254,86 @@ app.put("/user-carlist", async (req, res) => {
   });
 });
 
-app.get("/allCars", async (req, res) => {
-  res.json(await Car.find());
+app.post("/allCars", async (req, res) => {
+  const { fromDate, toDate } = req.body;
+  if (!fromDate) {
+    console.log(true);
+  }
+
+  // const fromDate = moment("Nov 02 2023 00:00").format("MMM DD YYYY HH:mm");
+  // const toDate = moment("Nov 03 2023 00:00").format("MMM DD YYYY HH:mm");
+
+  Booking.find({})
+    .then(async (bookings) => {
+      const excludedCarIds = [];
+      // Use JavaScript to filter bookings based on date range
+      bookings.forEach((booking) => {
+        const bookingFrom = moment(booking.bookedTimeSlots.from).format(
+          "MMM DD YYYY HH:mm"
+        );
+        const bookingTo = moment(booking.bookedTimeSlots.to).format(
+          "MMM DD YYYY HH:mm"
+        );
+
+        const isFromBetween = moment(fromDate).isBetween(
+          bookingFrom,
+          bookingTo
+        );
+
+        const isToBetween = moment(toDate).isBetween(bookingFrom, bookingTo);
+
+        // Check if the booking's time range overlaps with the specified date range
+
+        if (isFromBetween || isToBetween) {
+          excludedCarIds.push(booking.car);
+        }
+      });
+
+      // Now you have filtered bookings; you can proceed with your MongoDB query
+      // to fetch the cars that are not booked during the specified date range.
+      // You can use the IDs of filtered bookings to exclude them in the query.
+
+      const availableCars = await Car.find({
+        _id: { $nin: excludedCarIds },
+      });
+
+      res.json(availableCars);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Internal server error" });
+    });
 });
 
-app.get("/filteredCars", async (req, res) => {
-  const cars = await Car.find().populate({
-    path: "owner",
-    match: { pickupLocations: "Istog" },
-    select: "pickupLocations",
-  });
-  res.json(cars);
+app.get("/allCars/:id", async (req, res) => {
+  const id = req.params.id;
+  const carDoc = await Car.findById(id);
+  const bookings = await Booking.find({ car: id });
+
+  res.json({ carDoc, bookings });
+});
+
+app.post("/booking", async (req, res) => {
+  const {
+    car,
+    bookingUser,
+    price,
+    bookedTimeSlots: { from, to },
+    totalHours,
+  } = req.body;
+  Booking.create({
+    car,
+    bookingUser,
+    price,
+    bookedTimeSlots: { from, to },
+    totalHours,
+  })
+    .then((doc) => {
+      res.json(doc);
+    })
+    .catch((err) => {
+      throw err;
+    });
 });
 
 app.listen(4000);
