@@ -256,9 +256,6 @@ app.put("/user-carlist", async (req, res) => {
 
 app.post("/allCars", async (req, res) => {
   const { fromDate, toDate } = req.body;
-  if (!fromDate) {
-    console.log(true);
-  }
 
   // const fromDate = moment("Nov 02 2023 00:00").format("MMM DD YYYY HH:mm");
   // const toDate = moment("Nov 03 2023 00:00").format("MMM DD YYYY HH:mm");

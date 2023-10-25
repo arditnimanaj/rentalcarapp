@@ -27,9 +27,16 @@ export default function IndexPage() {
     });
   }
 
+  const disabledDate = (current) => {
+    return current && current < moment().endOf("day");
+  };
   return (
     <>
-      <RangePicker onChange={showValues} showTime={false}></RangePicker>
+      <RangePicker
+        onChange={showValues}
+        showTime={{ format: "HH" }}
+        disabledDate={disabledDate}
+      ></RangePicker>
       <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 p-2">
         {cars.length > 0 &&
           cars.map((car) => (

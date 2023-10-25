@@ -43,7 +43,9 @@ export default function CarPage() {
     // Get the current date
     const currentDate = current.format("YYYY-MM-DD");
 
-    // console.log(disabledDateRanges);
+    if (currentDate < moment().format("YYYY-MM-DD")) {
+      return true;
+    }
 
     for (let i = 0; i < disabledDateRanges.length; i++) {
       const rangeFrom = moment(disabledDateRanges[i].from).format("YYYY-MM-DD");
@@ -103,8 +105,8 @@ export default function CarPage() {
           {carData.brand} {carData.model}
           <div>{carData.price}</div>
           <RangePicker
-            showTime={false}
-            format="MMM DD YYYY"
+            showTime={{ format: "HH" }}
+            format="MMM-DD-YYYY HH"
             onChange={selectTimeSlots}
             disabledDate={disabledDate}
           />
