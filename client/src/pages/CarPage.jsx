@@ -13,10 +13,12 @@ export default function CarPage() {
 
   const [carData, setCarData] = useState(null);
   const [disabledDateRanges, setDisabledDateRanges] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [from, setFrom] = useState("");
 
+  // const [isLoading, setIsLoading] = useState(true);
+
+  const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+
   const [totalHours, setTotalHours] = useState();
 
   useEffect(() => {
@@ -40,6 +42,7 @@ export default function CarPage() {
       // If 'current' is not provided, don't disable any date
       return false;
     }
+
     // Get the current date
     const currentDate = current.format("YYYY-MM-DD");
 
@@ -59,8 +62,8 @@ export default function CarPage() {
   function selectTimeSlots(values) {
     const selectedFrom = moment(values[0].$d);
     const selectedTo = moment(values[1].$d);
-    console.log(selectedFrom);
-    console.log(selectedTo);
+    // console.log(selectedFrom);
+    // console.log(selectedTo);
 
     const isOverlap = disabledDateRanges.some((range) => {
       const rangeFrom = moment(range.from);
@@ -95,7 +98,7 @@ export default function CarPage() {
       totalHours,
       price: (totalHours / 24) * carData.price,
     });
-    console.log(data);
+    // console.log(data);
   }
 
   return (

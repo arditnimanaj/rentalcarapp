@@ -10,10 +10,12 @@ import Divider from "@mui/material/Divider";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import axios from "axios";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -81,9 +83,10 @@ function CustomizedMenus({ user }) {
         aria-expanded={open ? "true" : undefined}
         disableElevation
         className="border rounded-5xl"
+        size="small"
         onClick={handleClick}
       >
-        <div className="flex gap-2 border rounded-3xl p-1 transition ease-in-out delay-100  hover:scale-110 hover:bg-cyan-950 duration-200">
+        <div className="flex gap-2 border rounded-3xl p-1 transition ease-in-out delay-100  hover:scale-110 hover:bg-cyan-950 duration-200 items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -104,7 +107,7 @@ function CustomizedMenus({ user }) {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6 text-white"
+            class="w-5 h-5 text-white text-center items-center"
           >
             <path
               stroke-linecap="round"
@@ -131,22 +134,18 @@ function CustomizedMenus({ user }) {
         <Divider sx={{ my: 0.5 }} />
         <Link to={"/account"}>
           <MenuItem disableRipple onClick={handleClose}>
-            <EditIcon />
+            <DashboardIcon />
             Admin Dashboard
           </MenuItem>
         </Link>
         <MenuItem onClick={handleClose} disableRipple>
-          <FileCopyIcon />
+          <CalendarTodayIcon />
           My bookings
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={logOutUser} disableRipple>
-          <ArchiveIcon />
+          <LogoutIcon />
           Log out
-        </MenuItem>
-        <MenuItem onClick={handleClose} disableRipple>
-          <MoreHorizIcon />
-          More
         </MenuItem>
       </StyledMenu>
     </div>

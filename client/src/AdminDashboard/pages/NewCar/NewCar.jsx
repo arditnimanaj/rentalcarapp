@@ -33,6 +33,7 @@ export default function NewCar() {
   const [brand, setBrand] = useState("");
   const [model, setModel] = useState("");
   const [licensePlate, setLicensePlate] = useState("");
+  const [engineCapacity, setEngineCapacity] = useState("");
   const [type, setType] = useState("");
   const [capacity, setCapacity] = useState(5);
   const [fuel, setFuel] = useState("");
@@ -287,6 +288,15 @@ export default function NewCar() {
                   <MenuItem value="7">7+</MenuItem>
                 </Select>
               </FormControl>
+              <TextField
+                id="outlined-textarea"
+                label="Engine Capacity"
+                placeholder="2000cc"
+                value={licensePlate}
+                required
+                onChange={(ev) => setLicensePlate(ev.target.value)}
+                multiline
+              />
               <div className="">
                 <label>
                   Pick up your car fuel type:
@@ -314,6 +324,7 @@ export default function NewCar() {
                     />
                   </RadioGroup>
                 </label>
+
                 <label>
                   Pick up your car gearbox:
                   <RadioGroup

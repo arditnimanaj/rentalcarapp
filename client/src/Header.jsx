@@ -1,23 +1,18 @@
 import React, { useContext } from "react";
 import { styled, alpha } from "@mui/material/styles";
-
 import { Link, Navigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import whiteLogo from "../../logopng/logo-white-removebg.png";
 import CustomizedMenus from "./components/CustomizedMenus";
-import { Button, MenuList } from "@mui/material";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { HashLink } from "react-router-hash-link";
 
 <style>
   @import
-  url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+  url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@0;1&display=swap');
+</style>;
+<style>
+  @import
+  url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@200&display=swap');
 </style>;
 
 export default function Header() {
@@ -27,27 +22,27 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-black p-2 flex items-center justify-between min-w-full">
+    <header className="bg-slate-950 p-2 flex items-center justify-between w-full lg:w-full shadow-lg shadow-cyan-950 fixed z-[1000]">
       <a href="" className="flex items-center gap-1 ">
-        <Link to={"/"}>
+        <HashLink smooth to="/#head" className="text-white font-poppins">
           <img src={whiteLogo} className="h-[50px] w-[150px] object-cover" />
-        </Link>
+        </HashLink>
       </a>
       <div className="flex justify-around items-center gap-12 p-2">
         <a href="" className="flex items-center gap-1 ">
-          <Link className="text-white font-poppins" to={"/"}>
+          <HashLink smooth to="/#book" className="text-white font-poppins">
+            <span>Book </span>
+          </HashLink>
+        </a>
+        <a href="" className="flex items-center gap-1 ">
+          <HashLink smooth to="/#about" className="text-white font-poppins">
             <span>About </span>
-          </Link>
+          </HashLink>
         </a>
         <a href="" className="flex items-center gap-1 ">
-          <Link className="text-white font-poppins" to={"/"}>
-            <span>Cars </span>
-          </Link>
-        </a>
-        <a href="" className="flex items-center gap-1 ">
-          <Link className="text-white font-poppins" to={"/"}>
+          <HashLink smooth to="/#about" className="text-white font-poppins">
             <span>Contact </span>
-          </Link>
+          </HashLink>
         </a>
 
         {!user && (
@@ -70,7 +65,7 @@ export default function Header() {
         )}
         {user && (
           <>
-            {console.log(user)}
+            {/* {console.log(user)} */}
             <CustomizedMenus user={user} />
           </>
         )}

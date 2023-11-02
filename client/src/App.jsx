@@ -25,6 +25,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/allCars/:id" element={<CarPage />} />
+          <Route path="/car/:id" element={<CarPage />} />
+          <Route path="/filteredCars" element={<CarPage />} />
         </Route>
         <Route path="/account/*" element={<AccountLayout />}>
           <Route path="" element={<Home />} />

@@ -333,4 +333,37 @@ app.post("/booking", async (req, res) => {
     });
 });
 
+app.get("/pickup-locations", async (req, res) => {
+  try {
+    // Fetch all users from the database.
+    const users = await User.find({}, "pickupLocations");
+
+    // Extract and combine pickup locations into a single array.
+    let allPickupLocations = [];
+    users.forEach((user) => {
+      if (user.pickupLocations && user.pickupLocations.length > 0) {
+        allPickupLocations = allPickupLocations.concat(user.pickupLocations);
+      }
+    });
+
+    // Remove duplicates from the array.
+    const uniquePickupLocations = [...new Set(allPickupLocations)];
+
+    res.json(uniquePickupLocations);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/random-cars", async (req, res) => {
+  try {
+    const cars = await Car.aggregate([{ $sample: { size: 4 } }]); // This fetches 4 random cars from the collection
+    res.json(cars);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.listen(4000);
