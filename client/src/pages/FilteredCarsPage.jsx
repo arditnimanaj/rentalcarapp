@@ -32,7 +32,7 @@ function FilteredCarsPage() {
 
   function filterCars() {
     axios.post("/filteredCars", selectedFilters).then((response) => {
-      console.log(selectedFilters);
+      //   console.log(selectedFilters);
       setCars(response.data);
     });
   }
@@ -111,6 +111,8 @@ function FilteredCarsPage() {
   function handleDataChange(values) {
     const fromDate = moment(values[0].$d).format("MMM DD YYYY HH:mm");
     const toDate = moment(values[1].$d).format("MMM DD YYYY HH:mm");
+    setFromDate(fromDate);
+    setToDate(toDate);
     setSelectedFilters({
       ...selectedFilters,
       fromDate: fromDate,
@@ -147,11 +149,12 @@ function FilteredCarsPage() {
   return (
     <div class="antialiased bg-gray-50 ">
       <aside
-        class="fixed top-0 left-3 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0  mt-4 items-center text-center"
-        // aria-label="Sidenav"
-        // id="drawer-navigation"
+        className="fixed top-20 left-10 z-40  shadow-2xl shadow-cyan-950 h-fit  my-4 md:translate-x-0 items-center text-center transition-transform -translate-x-full"
+        // class="fixed top-0 left-3 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0  mt-4 items-center text-center"
+        aria-label="Sidenav"
+        id="drawer-navigation"
       >
-        <div class="overflow-y-auto py-5 px-3 h-full bg-white items-center ">
+        <div class="overflow-y-auto py-5 px-3 h-full shadow-2xl items-center border rounded-xl">
           <div class="space-y-2 items-center ">
             <ClockCircleTwoTone />
             <span class="ml-3 text-md font-bold  text-gray-900 rounded-lg  group">
@@ -291,10 +294,13 @@ function FilteredCarsPage() {
           </div>
         </div>
       </aside>
-      <div class="p-10 md:ml-64 h-20 pt-20 ">
-        <div class="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-          <CarCard cars={cars} />
-          <CarCard cars={cars} />
+      <div class="p-10 md:ml-64 h-20 pt-20">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 h-full mb-4 mx-10">
+          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />
+          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}
+          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}
+          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}
+          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />
         </div>
       </div>
     </div>

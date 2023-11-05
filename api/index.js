@@ -265,7 +265,7 @@ app.post("/filteredCars", async (req, res) => {
     price,
     gearbox,
   } = req.body;
-
+  // console.log(req.body);
   const filters = {
     //Handling errors due to case sensitivity
     fuel: fuel ? fuel.map((value) => new RegExp(value, "i")) : [],
@@ -274,7 +274,7 @@ app.post("/filteredCars", async (req, res) => {
       : [],
     gearbox: gearbox ? gearbox.map((value) => new RegExp(value, "i")) : [],
   };
-  console.log(filters);
+  // console.log(filters);
   Booking.find({})
     .then(async (bookings) => {
       const excludedCarIds = [];
