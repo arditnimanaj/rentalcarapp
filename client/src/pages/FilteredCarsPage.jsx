@@ -3,16 +3,18 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CarCard from "../components/CarCard";
 import "../AdminDashboard/components/sidebar/sidebar.css";
-import { DatePicker, Select, Slider } from "antd";
+import { DatePicker, Radio, Select, Slider } from "antd";
 import moment from "moment";
 import dayjs from "dayjs";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import SettingsIcon from "@mui/icons-material/Settings";
 import { ClockCircleTwoTone, CarTwoTone } from "@ant-design/icons";
 import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import { Button, Space, Checkbox, Menu, Dropdown } from "antd";
 import GroupIcon from "@mui/icons-material/Group";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import { RadioGroup } from "@mui/material";
 function FilteredCarsPage() {
   const { RangePicker } = DatePicker;
   const {
@@ -24,11 +26,13 @@ function FilteredCarsPage() {
   const [toDate, setToDate] = useState(initialToDate);
   const [cars, setCars] = useState([]);
   const [pickupLocations, setPickupLocations] = useState([]);
+  const [selectedPrice, setSelectedPrice] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState(null);
   const navigate = useNavigate();
 
   function filterCars() {
     axios.post("/filteredCars", selectedFilters).then((response) => {
-      //   console.log(selectedFilters);
+      console.log(selectedFilters);
       setCars(response.data);
     });
   }
@@ -59,17 +63,12 @@ function FilteredCarsPage() {
       options: ["Sedan", "SUV", "Family Car", "Convertible"],
       icon: <DirectionsCarIcon />,
     },
+
     {
-      key: "seats",
-      label: "Seats",
-      options: ["2", "5", "7", "7+"],
-      icon: <GroupIcon />,
-    },
-    {
-      key: "price",
-      label: "Price/day",
-      options: ["<30", "30-60", "60-100", "100+"],
-      icon: <AttachMoneyIcon />,
+      key: "gearbox",
+      label: "Gearbox",
+      options: ["Automatic", "Manual"],
+      icon: <SettingsIcon />,
     },
   ];
 
@@ -88,6 +87,17 @@ function FilteredCarsPage() {
         ))}
       </Menu>
     );
+  };
+
+  const handlePriceChange = (value) => {
+    setSelectedPrice(value.target.value);
+    setSelectedFilters({ ...selectedFilters, price: value.target.value });
+    // console.log(selectedFilters);
+  };
+  const handleSeatsChange = (value) => {
+    setSelectedSeats(value.target.value);
+    setSelectedFilters({ ...selectedFilters, seats: value.target.value });
+    // console.log(selectedFilters);
   };
 
   const filterOption = (input, option) =>
@@ -116,6 +126,7 @@ function FilteredCarsPage() {
     type: [],
     seats: [],
     price: [],
+    gearbox: [],
   });
 
   const handleFilterChange = (filterKey, checked, option) => {
@@ -198,6 +209,74 @@ function FilteredCarsPage() {
                     </Button>
                   </Dropdown>
                 ))}
+                <Dropdown
+                  key="Price"
+                  trigger={["click"]}
+                  overlay={
+                    <Menu>
+                      <Radio.Group
+                        value={selectedPrice}
+                        onChange={handlePriceChange}
+                        className="w-full"
+                      >
+                        <Menu.Item key="30">
+                          <Radio value="30">&lt;30$</Radio>
+                        </Menu.Item>
+                        <Menu.Item key="3060">
+                          <Radio value="3060">30$-60$</Radio>
+                        </Menu.Item>
+                        <Menu.Item key="60100">
+                          <Radio value="60100">60$-100$</Radio>
+                        </Menu.Item>
+                        <Menu.Item key="100">
+                          <Radio value="100">100$&gt;</Radio>
+                        </Menu.Item>
+                      </Radio.Group>
+                    </Menu>
+                  }
+                >
+                  <Button
+                    size="large"
+                    icon={<AttachMoneyIcon />}
+                    className="w-full items-center text-center mt-2 "
+                  >
+                    Price
+                  </Button>
+                </Dropdown>
+                <Dropdown
+                  key="Seats"
+                  trigger={["click"]}
+                  overlay={
+                    <Menu>
+                      <Radio.Group
+                        value={selectedSeats}
+                        onChange={handleSeatsChange}
+                        className="w-full"
+                      >
+                        <Menu.Item key="2">
+                          <Radio value="2">2</Radio>
+                        </Menu.Item>
+                        <Menu.Item key="5">
+                          <Radio value="5">5</Radio>
+                        </Menu.Item>
+                        <Menu.Item key="7">
+                          <Radio value="7">7</Radio>
+                        </Menu.Item>
+                        <Menu.Item key="8">
+                          <Radio value="8">7+</Radio>
+                        </Menu.Item>
+                      </Radio.Group>
+                    </Menu>
+                  }
+                >
+                  <Button
+                    size="large"
+                    icon={<GroupIcon />}
+                    className="w-full items-center text-center mt-2 "
+                  >
+                    Seats
+                  </Button>
+                </Dropdown>
               </Space>
             </div>
           </div>

@@ -255,20 +255,26 @@ app.put("/user-carlist", async (req, res) => {
 });
 
 app.post("/filteredCars", async (req, res) => {
-  const { fromDate, toDate, selectedPickupLocation, fuel, type, seats, price } =
-    req.body;
+  const {
+    fromDate,
+    toDate,
+    selectedPickupLocation,
+    fuel,
+    type,
+    seats,
+    price,
+    gearbox,
+  } = req.body;
 
   const filters = {
     //Handling errors due to case sensitivity
-
     fuel: fuel ? fuel.map((value) => new RegExp(value, "i")) : [],
     type: type
       ? type.map((value) => new RegExp(value.replace(/\s/g, ""), "i"))
       : [],
-    seats: seats ? seats : [],
-    // price: price.map((value) => new RegExp(value, "i")),
+    gearbox: gearbox ? gearbox.map((value) => new RegExp(value, "i")) : [],
   };
-
+  console.log(filters);
   Booking.find({})
     .then(async (bookings) => {
       const excludedCarIds = [];
@@ -309,10 +315,30 @@ app.post("/filteredCars", async (req, res) => {
       if (filters.type.length > 0) {
         carFilter.type = { $in: filters.type };
       }
-      if (filters.seats.length > 0) {
-        carFilter.capacity = { $in: seats };
+
+      if (filters.gearbox.length > 0) {
+        carFilter.gearbox = { $in: filters.gearbox };
       }
-      console.log(carFilter);
+
+      if (seats !== undefined) {
+        if (seats.length > 0) {
+          carFilter.capacity = { $in: seats };
+        }
+      }
+
+      if (price !== undefined && price.length > 0) {
+        console.log(price);
+        if (price === "30") {
+          carFilter.price = { $lt: 30 };
+        } else if (price === "3060") {
+          carFilter.price = { $gte: 30, $lt: 60 };
+        } else if (price === "60100") {
+          carFilter.price = { $gte: 60, $lt: 100 };
+        } else if (price === "100") {
+          carFilter.price = { $gte: 100 };
+        }
+      }
+      // console.log(carFilter);
       const availableCars = await Car.find(carFilter)
         .populate({
           path: "owner",
