@@ -254,11 +254,20 @@ app.put("/user-carlist", async (req, res) => {
   });
 });
 
-app.post("/allCars", async (req, res) => {
-  const { fromDate, toDate } = req.body;
+app.post("/filteredCars", async (req, res) => {
+  const { fromDate, toDate, selectedPickupLocation, fuel, type, seats, price } =
+    req.body;
 
-  // const fromDate = moment("Nov 02 2023 00:00").format("MMM DD YYYY HH:mm");
-  // const toDate = moment("Nov 03 2023 00:00").format("MMM DD YYYY HH:mm");
+  const filters = {
+    //Handling errors due to case sensitivity
+
+    fuel: fuel ? fuel.map((value) => new RegExp(value, "i")) : [],
+    type: type
+      ? type.map((value) => new RegExp(value.replace(/\s/g, ""), "i"))
+      : [],
+    seats: seats ? seats : [],
+    // price: price.map((value) => new RegExp(value, "i")),
+  };
 
   Booking.find({})
     .then(async (bookings) => {
@@ -286,15 +295,34 @@ app.post("/allCars", async (req, res) => {
         }
       });
 
-      // Now you have filtered bookings; you can proceed with your MongoDB query
+      // Now we have filtered bookings; then we proceed with MongoDB query
       // to fetch the cars that are not booked during the specified date range.
       // You can use the IDs of filtered bookings to exclude them in the query.
 
-      const availableCars = await Car.find({
+      const carFilter = {
         _id: { $nin: excludedCarIds },
-      });
+      };
+
+      if (filters.fuel.length > 0) {
+        carFilter.fuel = { $in: filters.fuel };
+      }
+      if (filters.type.length > 0) {
+        carFilter.type = { $in: filters.type };
+      }
+      if (filters.seats.length > 0) {
+        carFilter.capacity = { $in: seats };
+      }
+      console.log(carFilter);
+      const availableCars = await Car.find(carFilter)
+        .populate({
+          path: "owner",
+          match: { pickupLocations: selectedPickupLocation }, // Filter owners based on pickupLocation
+          select: "pickupLocations",
+        })
+        .exec();
 
       res.json(availableCars);
+      // console.log(availableCars);
     })
     .catch((err) => {
       console.error(err);

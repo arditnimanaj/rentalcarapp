@@ -9,7 +9,7 @@ import manageBookings from "../../../logopng/booking-manage.png";
 
 function AboutComponent() {
   return (
-    <div id="about" className="">
+    <div id="about" className="max-w-full">
       <div className="flex flex-col mx-auto text-center justify-items-center gap-4">
         <div className="text-center max-w-full items-center flex flex-col min-w-full mt-10">
           {/* <img
@@ -99,8 +99,8 @@ function AboutComponent() {
         </div>
       </div>
 
-      <div className="my-4 h-[180px] dark:bg-gray-900 w-full  flex flex-col text-center items-center ">
-        <p className=" items-center h-full flex gap-2 text-center text-6xl text-white font-bold">
+      <div className="my-4 h-[180px] bg-gray-900 w-full  flex flex-col text-center items-center ">
+        <p className=" items-center h-full flex gap-2 text-center text-6xl text-white font-bold ">
           Save your time & money with {"  "}
           <span className="text-[#d5a4a4]"> RentKOS</span>
         </p>

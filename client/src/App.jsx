@@ -12,6 +12,7 @@ import CarsList from "./AdminDashboard/pages/CarsList/CarsList";
 import NewCar from "./AdminDashboard/pages/NewCar/NewCar";
 import ProfilePage from "./AdminDashboard/pages/ProfilePage/ProfilePage";
 import CarPage from "./pages/CarPage";
+import FilteredCarsPage from "./pages/FilteredCarsPage";
 
 axios.defaults.baseURL = "http://127.0.0.1:4000";
 axios.defaults.withCredentials = true;
@@ -26,7 +27,10 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/allCars/:id" element={<CarPage />} />
           <Route path="/car/:id" element={<CarPage />} />
-          <Route path="/filteredCars" element={<CarPage />} />
+          <Route
+            path="/filteredCars/:fromDate/:toDate/:selectedPickupLocation"
+            element={<FilteredCarsPage />}
+          />
         </Route>
         <Route path="/account/*" element={<AccountLayout />}>
           <Route path="" element={<Home />} />

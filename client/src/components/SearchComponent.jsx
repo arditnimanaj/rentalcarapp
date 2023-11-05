@@ -3,16 +3,27 @@ import moment from "moment";
 import axios from "axios";
 import { Select } from "antd";
 import { DatePicker } from "antd";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import "../index.css";
 
 const { RangePicker } = DatePicker;
 export default function SearchComponent() {
   const [pickupLocations, setPickupLocations] = useState([]);
-  const [selectedPickupLocation, setSelectedPickupLocation] = useState([]);
-  const [cars, setCars] = useState({});
+  const [selectedPickupLocation, setSelectedPickupLocation] = useState();
+  const [fromDate, setFromDate] = useState();
+  const [toDate, setToDate] = useState();
+  const navigate = useNavigate();
 
   const submitValues = (value) => {
-    console.log(`selected ${value}`);
+    if (
+      fromDate === undefined ||
+      toDate === undefined ||
+      selectedPickupLocation === undefined
+    ) {
+      alert("Ju lutem shenoni te dhenat e rezervimit.");
+    } else {
+      navigate(`/filteredCars/${fromDate}/${toDate}/${selectedPickupLocation}`);
+    }
   };
 
   // Filter `option.label` match the user type `input`
@@ -33,12 +44,8 @@ export default function SearchComponent() {
   function showValues(values) {
     const fromDate = moment(values[0].$d).format("MMM DD YYYY HH:mm");
     const toDate = moment(values[1].$d).format("MMM DD YYYY HH:mm");
-    console.log(fromDate);
-    console.log(toDate);
-    axios.post("/allCars", { fromDate, toDate }).then((response) => {
-      setCars(response.data);
-    });
-    // console.log(cars);
+    setFromDate(fromDate);
+    setToDate(toDate);
   }
 
   const disabledDate = (current) => {
@@ -46,7 +53,7 @@ export default function SearchComponent() {
   };
 
   return (
-    <div className="flex mx-auto justify-between gap-4 border rounded-3xl  max-w-fit p-4 shadow-2xl shadow-cyan-950 ">
+    <div className="flex mx-auto justify-between gap-4 border rounded-2xl  max-w-fit p-4 shadow-2xl shadow-cyan-950 ">
       <div className="flex flex-col">
         <span className="flex font-roboto font-bold items-center text-center mb-2 gap-1 uppercase">
           <svg
@@ -69,6 +76,7 @@ export default function SearchComponent() {
         <RangePicker
           onChange={showValues}
           showTime={{ format: "HH" }}
+          format={"MMM DD YYYY / HH:00"}
           disabledDate={disabledDate}
           size={"large"}
         ></RangePicker>
@@ -105,22 +113,22 @@ export default function SearchComponent() {
           showSearch
           placeholder="Select a pickup location"
           optionFilterProp="children"
-          // onChange={onChange}
+          onChange={(value) => {
+            setSelectedPickupLocation(value);
+          }}
           filterOption={filterOption}
           options={pickupLocationOptions}
         />
       </div>
 
       <div className="flex text-center mx-auto p-2">
-        <Link to={"/filteredCars"} className="mx-auto flex">
-          <button
-            type="submit"
-            className="border rounded-xl bg-black hover:bg-cyan-950 text-white font-poppins font-bold p-2 w-40 h-15 text-center uppercase"
-            onClick={submitValues}
-          >
-            Search...
-          </button>
-        </Link>
+        <button
+          type="submit"
+          className="border rounded-xl bg-black hover:bg-cyan-950 text-white font-poppins font-bold p-2 w-40 h-15 text-center uppercase"
+          onClick={submitValues}
+        >
+          Search...
+        </button>
       </div>
     </div>
   );

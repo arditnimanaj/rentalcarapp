@@ -13,11 +13,9 @@ export default function CarPage() {
 
   const [carData, setCarData] = useState(null);
   const [disabledDateRanges, setDisabledDateRanges] = useState([]);
-
-  // const [isLoading, setIsLoading] = useState(true);
-
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  // const [isLoading, setIsLoading] = useState(true);
 
   const [totalHours, setTotalHours] = useState();
 
@@ -46,6 +44,7 @@ export default function CarPage() {
     // Get the current date
     const currentDate = current.format("YYYY-MM-DD");
 
+    //disable past dates so the user cannot book in the past
     if (currentDate < moment().format("YYYY-MM-DD")) {
       return true;
     }
@@ -87,7 +86,7 @@ export default function CarPage() {
     }
   }
 
-  async function perfundoj() {
+  async function saveBooking() {
     const data = await axios.post("/booking", {
       car: carData._id,
       bookingUser: user._id,
@@ -104,7 +103,7 @@ export default function CarPage() {
   return (
     <div>
       {carData ? (
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-20">
           {carData.brand} {carData.model}
           <div>{carData.price}</div>
           <RangePicker
@@ -119,7 +118,7 @@ export default function CarPage() {
             " = " +
             (totalHours / 24) * carData.price +
             "euro"}
-          <button className="bg-red-200 max-w-2xl m-auto" onClick={perfundoj}>
+          <button className="bg-red-200 max-w-2xl m-auto" onClick={saveBooking}>
             submit
           </button>
         </div>

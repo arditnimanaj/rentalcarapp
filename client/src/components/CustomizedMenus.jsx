@@ -75,7 +75,7 @@ function CustomizedMenus({ user }) {
     navigate("/");
   }
   return (
-    <div>
+    <div className="sticky overflow-y-auto max-h-screen">
       <Button
         id="demo-customized-button"
         aria-controls={open ? "demo-customized-menu" : undefined}

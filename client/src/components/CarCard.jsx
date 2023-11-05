@@ -10,10 +10,10 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 
 function CarCard({ cars }) {
   return (
-    <div className=" m-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-2 justify-between">
+    <>
       {cars.length > 0 &&
         cars.map((car) => (
-          <Link to={"/car/" + car._id}>
+          <Link to={"/car/" + car._id} key={car._id}>
             <div className="border rounded-3xl shadow-2xl shadow-cyan-950 p-5">
               <div>
                 <img
@@ -59,7 +59,7 @@ function CarCard({ cars }) {
                 </div>
                 {car.ac ? (
                   <div className="flex flex-col text-center items-center">
-                    <p>With AC</p>
+                    <p className="">With AC</p>
                     <div className="border rounded-full p-2 max-w-fit flex  bg-gray-400 ">
                       <AcUnitIcon />
                     </div>
@@ -87,7 +87,7 @@ function CarCard({ cars }) {
             </div>
           </Link>
         ))}
-    </div>
+    </>
   );
 }
 

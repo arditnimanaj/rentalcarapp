@@ -273,6 +273,7 @@ export default function NewCar() {
                   <MenuItem value="suv">SUV</MenuItem>
                   <MenuItem value="sedan">Sedan</MenuItem>
                   <MenuItem value="familycar">Family Car</MenuItem>
+                  <MenuItem value="convertible">Convertible</MenuItem>
                 </Select>
               </FormControl>
               <FormControl>
@@ -284,8 +285,11 @@ export default function NewCar() {
                   value={capacity}
                   onChange={(ev) => setCapacity(ev.target.value)}
                 >
+                  {" "}
+                  <MenuItem value="2">2</MenuItem>
                   <MenuItem value="5">5</MenuItem>
-                  <MenuItem value="7">7+</MenuItem>
+                  <MenuItem value="7">7</MenuItem>
+                  <MenuItem value="7+">7</MenuItem>
                 </Select>
               </FormControl>
               <TextField
@@ -312,6 +316,7 @@ export default function NewCar() {
                       control={<Radio />}
                       label="Diesel"
                     />
+
                     <FormControlLabel
                       value="petrol"
                       control={<Radio />}
@@ -321,6 +326,11 @@ export default function NewCar() {
                       value="hybrid"
                       control={<Radio />}
                       label="Hybrid"
+                    />
+                    <FormControlLabel
+                      value="electric"
+                      control={<Radio />}
+                      label="Electric"
                     />
                   </RadioGroup>
                 </label>

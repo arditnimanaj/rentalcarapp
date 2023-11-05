@@ -3,16 +3,16 @@ import rentLogo from "../../../logopng/logo-no-background.png";
 
 function Footer() {
   return (
-    <footer class="bg-white dark:bg-slate-950">
+    <footer class="bg-slate-950">
       <div class="mx-auto w-full max-w-screen-xl">
         <div class="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
           <img src={rentLogo} />
 
           <div>
-            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+            <h2 class="mb-6 text-sm font-semibold text-gray-500 uppercase ">
               Company
             </h2>
-            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+            <ul class="text-gray-500 font-medium">
               <li class="mb-4">
                 <a href="#" class=" hover:underline">
                   About
@@ -36,37 +36,35 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-              Help center
+            <h2 class="mb-6 text-sm font-semibold text-gray-500 uppercase">
+              Working Hours
             </h2>
-            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+            <ul class="text-gray-500  font-medium">
               <li class="mb-4">
-                <a href="#" class="hover:underline">
-                  Discord Server
-                </a>
+                <span href="#" class="">
+                  Mon - Fri: 9:00AM - 9:00PM
+                </span>
               </li>
               <li class="mb-4">
-                <a href="#" class="hover:underline">
-                  Twitter
-                </a>
+                <span href="#" class="">
+                  Sat: 9:00AM - 19:00PM
+                </span>
               </li>
               <li class="mb-4">
-                <a href="#" class="hover:underline">
-                  Facebook
-                </a>
+                <span href="#" class="">
+                  Sun: Closed
+                </span>
               </li>
               <li class="mb-4">
-                <a href="#" class="hover:underline">
-                  Contact Us
-                </a>
+                <span class="">Contact Us</span>
               </li>
             </ul>
           </div>
           <div>
-            <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+            <h2 class="mb-6 text-sm font-semibold text-gray-400 uppercase ">
               Legal
             </h2>
-            <ul class="text-gray-500 dark:text-gray-400 font-medium">
+            <ul class="text-gray-500 font-medium">
               <li class="mb-4">
                 <a href="#" class="hover:underline">
                   Privacy Policy
@@ -86,15 +84,12 @@ function Footer() {
           </div>
         </div>
         <div class="px-4 py-6 bg-slate-950 md:flex md:items-center md:justify-between">
-          <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
+          <span class="text-sm text-gray-500  sm:text-center">
             © 2023 <a href="https://flowbite.com/">RentKOS™</a>. All Rights
             Reserved.
           </span>
           <div class="flex mt-4 space-x-5 sm:justify-center md:mt-0">
-            <a
-              href="#"
-              class="text-gray-400 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" class="text-gray-400 hover:text-white ">
               <svg
                 class="w-4 h-4"
                 aria-hidden="true"
@@ -110,10 +105,7 @@ function Footer() {
               </svg>
               <span class="sr-only">Facebook page</span>
             </a>
-            <a
-              href="#"
-              class="text-gray-400 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" class="text-gray-400 hover:text-white">
               <svg
                 class="w-4 h-4"
                 aria-hidden="true"
@@ -125,10 +117,7 @@ function Footer() {
               </svg>
               <span class="sr-only">Discord community</span>
             </a>
-            <a
-              href="#"
-              class="text-gray-400 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" class="text-gray-400 hover:text-white ">
               <svg
                 class="w-4 h-4"
                 aria-hidden="true"
@@ -144,10 +133,7 @@ function Footer() {
               </svg>
               <span class="sr-only">Twitter page</span>
             </a>
-            <a
-              href="#"
-              class="text-gray-400 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" class="text-gray-400 hover:text-white">
               <svg
                 class="w-4 h-4"
                 aria-hidden="true"
@@ -163,10 +149,7 @@ function Footer() {
               </svg>
               <span class="sr-only">GitHub account</span>
             </a>
-            <a
-              href="#"
-              class="text-gray-400 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" class="text-gray-400 hover:text-white">
               <svg
                 class="w-4 h-4"
                 aria-hidden="true"

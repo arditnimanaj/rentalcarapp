@@ -22,7 +22,7 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-slate-950 p-2 flex items-center justify-between w-full lg:w-full shadow-lg shadow-cyan-950 fixed z-[1000]">
+    <header className="bg-slate-950 p-2 flex items-center justify-between w-full lg:w-full shadow-lg shadow-cyan-950 fixed  z-[1000]">
       <a href="" className="flex items-center gap-1 ">
         <HashLink smooth to="/#head" className="text-white font-poppins">
           <img src={whiteLogo} className="h-[50px] w-[150px] object-cover" />
@@ -40,7 +40,7 @@ export default function Header() {
           </HashLink>
         </a>
         <a href="" className="flex items-center gap-1 ">
-          <HashLink smooth to="/#about" className="text-white font-poppins">
+          <HashLink smooth to="/#contact" className="text-white font-poppins">
             <span>Contact </span>
           </HashLink>
         </a>

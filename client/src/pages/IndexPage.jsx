@@ -15,6 +15,7 @@ import "../index.css";
 import AboutComponent from "../components/AboutComponent";
 import Footer from "../components/Footer";
 import ContactCard from "../components/ContactCard";
+import { HashLink } from "react-router-hash-link";
 
 export default function IndexPage() {
   const [randomCars, setRandomCars] = useState({});
@@ -48,12 +49,17 @@ export default function IndexPage() {
             </p>
           </div>
           <div className="flex gap-4 justify-around text-center items-center mt-4">
-            <button className="border p-3 text-md font-bold uppercase  bg-black text-white hover:bg-cyan-950">
-              Book
-            </button>
-            <button className="border p-3 text-md font-bold uppercase  bg-black text-white hover:bg-cyan-950">
-              How does this work
-            </button>
+            <HashLink smooth to="/#book" className="text-white font-poppins">
+              <button className="border p-3 text-md font-bold uppercase  bg-black text-white hover:bg-cyan-950">
+                Book
+              </button>
+            </HashLink>
+
+            <HashLink smooth to="/#about" className="text-white font-poppins">
+              <button className="border p-3 text-md font-bold uppercase  bg-black text-white hover:bg-cyan-950">
+                How does this work
+              </button>
+            </HashLink>
           </div>
 
           {/* <img src={rentLogo} className="opacity-20 w-[400px] absolute" /> */}
@@ -74,7 +80,9 @@ export default function IndexPage() {
         <img src={skodaLogo} className="w-[120px] object-contain "></img>
       </div>
       {/* {console.log(randomCars)} */}
-      <CarCard cars={randomCars} />
+      <div className=" m-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-2 justify-between">
+        <CarCard cars={randomCars} />
+      </div>
       <AboutComponent />
       <ContactCard />
       <Footer />
