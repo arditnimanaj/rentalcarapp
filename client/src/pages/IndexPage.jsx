@@ -18,6 +18,7 @@ import ContactCard from "../components/ContactCard";
 import { HashLink } from "react-router-hash-link";
 
 export default function IndexPage() {
+  const [isLoading, setIsloading] = useState(true);
   const [randomCars, setRandomCars] = useState({});
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
@@ -26,6 +27,7 @@ export default function IndexPage() {
     axios.get("/random-cars").then((response) => {
       setRandomCars(response.data);
       // console.log(response);
+      setIsloading(false);
     });
   }, []);
 
@@ -81,7 +83,7 @@ export default function IndexPage() {
       </div>
       {/* {console.log(randomCars)} */}
       <div className=" m-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-2 justify-between">
-        <CarCard cars={randomCars} />
+        {isLoading ? <div>Loading..</div> : <CarCard cars={randomCars} />}
       </div>
       <AboutComponent />
       <ContactCard />

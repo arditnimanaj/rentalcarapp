@@ -31,6 +31,7 @@ function App() {
             path="/filteredCars/:fromDate/:toDate/:selectedPickupLocation"
             element={<FilteredCarsPage />}
           />
+          <Route path="/car/:id/:fromDate/:toDate" element={<CarPage />} />
         </Route>
         <Route path="/account/*" element={<AccountLayout />}>
           <Route path="" element={<Home />} />

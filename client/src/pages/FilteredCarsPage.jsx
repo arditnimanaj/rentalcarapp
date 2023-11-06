@@ -294,7 +294,7 @@ function FilteredCarsPage() {
           </div>
         </div>
       </aside>
-      <div class="p-10 md:ml-64 h-20 pt-20">
+      <div class="p-10 md:ml-64 h-20 pt-20 mt-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 h-full mb-4 mx-10">
           <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />
           <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}

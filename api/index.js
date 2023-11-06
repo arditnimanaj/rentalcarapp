@@ -358,7 +358,8 @@ app.post("/filteredCars", async (req, res) => {
 
 app.get("/allCars/:id", async (req, res) => {
   const id = req.params.id;
-  const carDoc = await Car.findById(id);
+  const carDoc = await Car.findById(id).populate("owner");
+
   const bookings = await Booking.find({ car: id });
 
   res.json({ carDoc, bookings });
