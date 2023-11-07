@@ -369,19 +369,25 @@ app.post("/booking", async (req, res) => {
   const {
     car,
     bookingUser,
+    carOwner,
     price,
     bookedTimeSlots: { from, to },
     totalHours,
+    extraInfo,
   } = req.body;
+
   Booking.create({
     car,
     bookingUser,
+    carOwner,
     price,
     bookedTimeSlots: { from, to },
     totalHours,
+    extraInfo,
   })
     .then((doc) => {
       res.json(doc);
+      console.log(doc);
     })
     .catch((err) => {
       throw err;
@@ -418,6 +424,22 @@ app.get("/random-cars", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.get("/admin-bookings", async (req, res) => {
+  try {
+    const { token } = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+      if (err) throw err;
+      const { id } = userData;
+
+      const booking = await Booking.find({ carOwner: id }).populate("car");
+      // console.log(booking);
+      res.json(booking);
+    });
+  } catch (err) {
+    throw err;
   }
 });
 

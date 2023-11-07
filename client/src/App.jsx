@@ -13,7 +13,7 @@ import NewCar from "./AdminDashboard/pages/NewCar/NewCar";
 import ProfilePage from "./AdminDashboard/pages/ProfilePage/ProfilePage";
 import CarPage from "./pages/CarPage";
 import FilteredCarsPage from "./pages/FilteredCarsPage";
-
+import AdminBookings from "./AdminDashboard/pages/Bookings/AdminBookings";
 axios.defaults.baseURL = "http://127.0.0.1:4000";
 axios.defaults.withCredentials = true;
 
@@ -38,6 +38,7 @@ function App() {
           <Route path="carlist" element={<CarsList />} />
           <Route path="newcar" element={<NewCar />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="bookings" element={<AdminBookings />} />
           <Route path="carlist/:id" element={<NewCar />} />
         </Route>
       </Routes>

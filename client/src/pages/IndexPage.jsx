@@ -16,7 +16,8 @@ import AboutComponent from "../components/AboutComponent";
 import Footer from "../components/Footer";
 import ContactCard from "../components/ContactCard";
 import { HashLink } from "react-router-hash-link";
-
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 export default function IndexPage() {
   const [isLoading, setIsloading] = useState(true);
   const [randomCars, setRandomCars] = useState({});
@@ -82,8 +83,25 @@ export default function IndexPage() {
         <img src={skodaLogo} className="w-[120px] object-contain "></img>
       </div>
       {/* {console.log(randomCars)} */}
-      <div className=" m-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-2 justify-between">
-        {isLoading ? <div>Loading..</div> : <CarCard cars={randomCars} />}
+      <div className="">
+        {isLoading ? (
+          <div className="w-full mx-auto flex justify-center my-5 ">
+            <Spin
+              indicator={
+                <LoadingOutlined
+                  style={{
+                    fontSize: 54,
+                  }}
+                  spin
+                />
+              }
+            />
+          </div>
+        ) : (
+          <div className=" m-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-2 justify-between">
+            <CarCard cars={randomCars} />
+          </div>
+        )}
       </div>
       <AboutComponent />
       <ContactCard />

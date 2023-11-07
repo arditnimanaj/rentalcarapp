@@ -82,10 +82,12 @@ export default function Sidebar() {
                 Shto vetura te reja
               </li>
             </Link>
-            <li className="sidebarListItem">
-              <AttachMoney className="sidebarIcon" />
-              Rezervimet
-            </li>
+            <Link to={"/account/bookings/"} className="link">
+              <li className="sidebarListItem">
+                <AttachMoney className="sidebarIcon" />
+                Rezervimet
+              </li>
+            </Link>
           </ul>
         </div>
         <div className="sidebarMenu">

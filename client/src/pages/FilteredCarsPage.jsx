@@ -14,7 +14,8 @@ import LocalGasStationIcon from "@mui/icons-material/LocalGasStation";
 import { Button, Space, Checkbox, Menu, Dropdown } from "antd";
 import GroupIcon from "@mui/icons-material/Group";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-import { RadioGroup } from "@mui/material";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 function FilteredCarsPage() {
   const { RangePicker } = DatePicker;
   const {
@@ -28,12 +29,14 @@ function FilteredCarsPage() {
   const [pickupLocations, setPickupLocations] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState(null);
   const [selectedSeats, setSelectedSeats] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   function filterCars() {
     axios.post("/filteredCars", selectedFilters).then((response) => {
       //   console.log(selectedFilters);
       setCars(response.data);
+      setIsLoading(false);
     });
   }
   useEffect(() => {
@@ -48,6 +51,7 @@ function FilteredCarsPage() {
     axios.get("/pickup-locations").then((response) => {
       setPickupLocations(response.data);
     });
+    setIsLoading(false);
   }, []);
 
   const filters = [
@@ -149,7 +153,7 @@ function FilteredCarsPage() {
   return (
     <div class="antialiased bg-gray-50 ">
       <aside
-        className="fixed top-20 left-10 z-40  shadow-2xl shadow-cyan-950 h-fit  my-4 md:translate-x-0 items-center text-center transition-transform -translate-x-full"
+        className="fixed top-20 left-10 z-40  shadow-2xl shadow-cyan-950 h-fit  my-4 md:translate-x-0 items-center text-center transition-transform -translate-x-full w-[280px]"
         // class="fixed top-0 left-3 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0  mt-4 items-center text-center"
         aria-label="Sidenav"
         id="drawer-navigation"
@@ -213,6 +217,7 @@ function FilteredCarsPage() {
                   </Dropdown>
                 ))}
                 <Dropdown
+                  placement="top"
                   key="Price"
                   trigger={["click"]}
                   overlay={
@@ -284,24 +289,47 @@ function FilteredCarsPage() {
             </div>
           </div>
 
-          <div>
+          <div className="flex justify-between">
             <button
               onClick={filterCars}
-              className="flex mx-auto text-white font-bold border rounded-lg bg-gray-500 hover:bg-gray-900 p-3 mt-4"
+              className="flex mx-auto text-white font-bold border rounded-lg bg-cyan-950 hover:bg-gray-900 p-3 mt-4"
             >
               Filter Cars
+            </button>
+            <button
+              onClick={filterCars}
+              className="flex mx-auto text-white font-bold border rounded-lg bg-red-500 hover:bg-gray-900 p-3 mt-4"
+            >
+              Reset Filters
             </button>
           </div>
         </div>
       </aside>
-      <div class="p-10 md:ml-64 h-20 pt-20 mt-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 h-full mb-4 mx-10">
-          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />
-          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}
-          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}
-          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}
-          <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />
-        </div>
+      <div>
+        {isLoading ? (
+          <div className="w-full mx-auto flex justify-center my-5 ">
+            <Spin
+              indicator={
+                <LoadingOutlined
+                  style={{
+                    fontSize: 54,
+                  }}
+                  spin
+                />
+              }
+            />
+          </div>
+        ) : (
+          <div class="p-10 md:ml-64 h-20 pt-20 mt-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 h-full mb-4 mx-10">
+              <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />
+              <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}
+              <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}
+              <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />{" "}
+              <CarCard cars={cars} fromDate={fromDate} toDate={toDate} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
