@@ -19,6 +19,8 @@ export default function AdminBookings() {
   const [isExtraInfoModalOpen, setIsExtraInfoModalOpen] = useState(false);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
+  const [selectedExtraInfo, setSelectedExtraInfo] = useState(null);
+
   const showDetailsModal = () => {
     setIsDetailsModalOpen(true);
   };
@@ -90,13 +92,16 @@ export default function AdminBookings() {
 
       renderCell: (params) => {
         const extraInfo = params.row.extraInfo;
-
+        const handleExtraInfoClick = () => {
+          setSelectedExtraInfo(extraInfo);
+          showExtraInfoModal(true);
+        };
         return (
           <div className="flex items-center text-center mx-auto">
             {extraInfo ? (
               <>
                 <div
-                  onClick={showExtraInfoModal}
+                  onClick={handleExtraInfoClick}
                   className="hover:cursor-pointer"
                 >
                   <InfoIcon sx={{ color: pink[500] }} />
@@ -111,7 +116,7 @@ export default function AdminBookings() {
                   >
                     <div className=" w-full bg-gray-300 p-5 rounded-lg mx-1 my-5">
                       <p className=" font-bold text-red-500 text-xl">
-                        "{extraInfo}"
+                        "{selectedExtraInfo}"
                       </p>
                     </div>
                   </Modal>
@@ -133,7 +138,7 @@ export default function AdminBookings() {
         const handleDetailsClick = () => {
           setSelectedBooking(booking);
           showDetailsModal(true);
-          console.log(booking);
+          // console.log(booking);
         };
 
         return (
@@ -155,7 +160,7 @@ export default function AdminBookings() {
                     onOk={handleDetailsModalOk}
                     onCancel={handleDetailsModalCancel}
                   >
-                    <div className=" w-full bg-gray-300 p-5 rounded-lg mx-1 my-5">
+                    <div className=" w-full bg-gray-200 p-5 rounded-lg mx-1 my-5">
                       <p className="font-bold text-2xl text-red-700">
                         Booking Customer Information !
                       </p>

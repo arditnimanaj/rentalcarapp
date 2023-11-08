@@ -186,13 +186,17 @@ app.get("/user-carlist", (req, res) => {
 });
 
 app.post("/upload-by-link", async (req, res) => {
-  const { link } = req.body;
-  const newName = "photo" + Date.now() + ".jpg";
-  await imageDownloader.image({
-    url: link,
-    dest: __dirname + "/uploads/" + newName,
-  });
-  res.json(newName);
+  try {
+    const { link } = req.body;
+    const newName = "photo" + Date.now() + ".jpg";
+    await imageDownloader.image({
+      url: link,
+      dest: __dirname + "/uploads/" + newName,
+    });
+    res.json(newName);
+  } catch (err) {
+    throw err;
+  }
 });
 
 const photosMiddleware = multer({ dest: "uploads/" });
@@ -447,4 +451,49 @@ app.get("/admin-bookings", async (req, res) => {
   }
 });
 
+app.post("/deleteCar", async (req, res) => {
+  try {
+    const { carId } = req.body;
+    const { token } = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+      if (err) throw err;
+      const car = await Car.findById(carId);
+      if (!car) {
+        return res.status(404).json({ message: "Car not found." });
+      }
+
+      if (car.owner.toString() !== userData.id) {
+        return res
+          .status(403)
+          .json({ message: "Unauthorized to delete this car." });
+      }
+
+      // Delete the car
+      await Car.findByIdAndDelete(carId);
+
+      // Delete all bookings associated with the car
+      await Booking.deleteMany({ car: carId });
+
+      res
+        .status(200)
+        .json({ message: "Car and associated bookings deleted successfully." });
+    });
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.get("/my-bookings", async (req, res) => {
+  try {
+    const { token } = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+      if (err) throw err;
+      const { id } = userData;
+      const myBooking = await Booking.find({ bookingUser: id }).populate("car");
+      res.json(myBooking);
+    });
+  } catch (err) {
+    throw err;
+  }
+});
 app.listen(4000);
