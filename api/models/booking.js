@@ -12,6 +12,8 @@ const bookingSchema = new mongoose.Schema({
   totalHours: { type: Number },
   price: Number,
   extraInfo: { type: String },
+  starsReview: { type: Number },
+  descriptionReview: { type: String },
 });
 
 const BookingModel = mongoose.model("Booking", bookingSchema);

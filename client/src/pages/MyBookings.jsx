@@ -3,13 +3,20 @@ import axios from "axios";
 import { Card, Modal } from "antd";
 import { Button } from "antd";
 import moment from "moment";
+import { Rate } from "antd";
+import { Input } from "antd";
+
+const { TextArea } = Input;
 const { Meta } = Card;
 
 function MyBookings() {
   const [myBookings, setMyBookings] = useState([]);
+  const [starsReview, setStarsReview] = useState("");
+  const [descriptionReview, setDescriptionReview] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isActive, setIsActive] = useState(false);
+
   useEffect(() => {
     // Check if today's date is between fromDate and toDate
     if (selectedBooking) {
@@ -25,6 +32,19 @@ function MyBookings() {
   const showModal = (booking) => {
     setSelectedBooking(booking);
     setIsModalVisible(true);
+    try {
+      axios.get("/get-review/" + booking._id).then((response) => {
+        const review = response.data;
+
+        setDescriptionReview(review.descriptionReview);
+        setStarsReview(review.starsReview);
+      });
+
+      setIsModalVisible(true);
+    } catch (error) {
+      console.error("Error fetching review data:", error);
+      // Handle the error, e.g., show an error message to the user
+    }
   };
 
   const handleCancel = () => {
@@ -37,6 +57,22 @@ function MyBookings() {
     });
   }, []);
 
+  const saveReview = async () => {
+    if (selectedBooking) {
+      try {
+        await axios.put("update-booking", {
+          bookingId: selectedBooking._id,
+          starsReview: starsReview,
+          descriptionReview: descriptionReview,
+        });
+        // You can also add logic to handle a successful submission, e.g., clear form fields, display a message, etc.
+      } catch (error) {
+        console.error("Error submitting review:", error);
+        // Handle error, e.g., display an error message to the user
+      }
+    }
+    setIsModalVisible(false);
+  };
   return (
     <div className="mt-20">
       <Modal
@@ -50,7 +86,7 @@ function MyBookings() {
         ]}
       >
         {selectedBooking && (
-          <div>
+          <div className="flex flex-col gap-2">
             <div className="flex justify-between">
               <p className="font-bold flex gap-2">
                 Car:{" "}
@@ -91,7 +127,30 @@ function MyBookings() {
               Total Price:{" "}
               <p className="font-bold text-red-700">${selectedBooking.price}</p>
             </p>
-            {/* Add more booking details as needed */}
+            <div className="text-center items-center justify-between bg-gray-200 px-4 py-4 rounded-2xl flex flex-col gap-2 mt-2">
+              <h1>Write a review</h1>
+              <Rate
+                defaultValue={"4"}
+                value={starsReview}
+                onChange={(value) => {
+                  setStarsReview(value);
+                }}
+              />
+              <TextArea
+                rows={4}
+                value={descriptionReview}
+                onChange={(ev) => {
+                  setDescriptionReview(ev.target.value);
+                }}
+                placeholder="Please write a review about your experience with our company."
+              />
+              <Button
+                type="primary"
+                onClick={() => saveReview(selectedBooking)}
+              >
+                Submit review
+              </Button>
+            </div>
           </div>
         )}
       </Modal>

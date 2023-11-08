@@ -9,8 +9,6 @@ const UserSchema = new mongoose.Schema({
   phoneNumber: String,
   pickupLocations: [String],
   paymentMethods: [String],
-  businessProfilePhoto: String,
-  businessSocialMedias: [String],
   isNewUser: Boolean,
 });
 

@@ -110,14 +110,8 @@ app.get("/profile", (req, res) => {
 
 app.put("/update-profile", async (req, res) => {
   const { token } = req.cookies;
-  const {
-    businessName,
-    phoneNumber,
-    paymentMethods,
-    pickupLocations,
-    businessProfilePicture,
-    businessSocialMedia,
-  } = req.body;
+  const { businessName, phoneNumber, paymentMethods, pickupLocations } =
+    req.body;
   if (token) {
     jwt.verify(token, jwtSecret, {}, async (err, user) => {
       if (err) throw err;
@@ -128,8 +122,6 @@ app.put("/update-profile", async (req, res) => {
         phoneNumber,
         paymentMethods,
         pickupLocations,
-        businessProfilePicture,
-        businessSocialMedia,
       });
       await profile.save();
       res.json(profile);
@@ -397,6 +389,35 @@ app.post("/booking", async (req, res) => {
     .catch((err) => {
       throw err;
     });
+});
+
+app.put("/update-booking", async (req, res) => {
+  const { token } = req.cookies;
+  const { starsReview, descriptionReview, bookingId } = req.body;
+
+  if (token) {
+    jwt.verify(token, jwtSecret, {}, async (err, user) => {
+      if (err) throw err;
+      const booking = await Booking.findById(bookingId);
+      booking.set({
+        starsReview,
+        descriptionReview,
+      });
+      await booking.save();
+      res.json(booking);
+    });
+  }
+});
+
+app.get("/get-review/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const reviewData = await Booking.findById(id);
+    res.json(reviewData);
+  } catch (error) {
+    console.error("Error fetching review:", error);
+    res.status(500).json({ error: "Error fetching review" });
+  }
 });
 
 app.get("/pickup-locations", async (req, res) => {
