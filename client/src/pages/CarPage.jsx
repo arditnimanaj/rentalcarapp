@@ -63,6 +63,7 @@ export default function CarPage() {
         from: fromDate,
         to: toDate,
       },
+      momentWhenBooked: moment().format("DD MMM YYYY - HH:00"),
       totalHours: moment(toDate).diff(moment(fromDate), "hours").toFixed(),
       extraInfo,
       price:

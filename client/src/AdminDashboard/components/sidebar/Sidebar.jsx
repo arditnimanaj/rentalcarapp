@@ -48,16 +48,12 @@ export default function Sidebar() {
             <Link to={"/account"} className="link">
               <li className="sidebarListItem active">
                 <LineStyle className="sidebarIcon" />
-                Kryefaqja
+                Homepage
               </li>
             </Link>
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
-              Statistika te shitjeve
-            </li>
-            <li className="sidebarListItem">
-              <TrendingUp className="sidebarIcon" />
-              Sales
+              Statistics
             </li>
           </ul>
         </div>
@@ -67,52 +63,44 @@ export default function Sidebar() {
             <Link to="/account/profile/" className="link">
               <li className="sidebarListItem">
                 <PersonIcon className="sidebarIcon" />
-                Perditesoje profilin
+                Update your profile
               </li>
             </Link>
             <Link to="/account/carlist/" className="link">
               <li className="sidebarListItem">
                 <DirectionsCarIcon className="sidebarIcon" />
-                Veturat
+                Cars
               </li>
             </Link>
             <Link to={"/account/newcar/"} className="link">
               <li className="sidebarListItem">
                 <AddIcon className="sidebarIcon" />
-                Shto vetura te reja
+                Add new cars
               </li>
             </Link>
             <Link to={"/account/bookings/"} className="link">
               <li className="sidebarListItem">
                 <AttachMoney className="sidebarIcon" />
-                Rezervimet
+                Bookings
               </li>
             </Link>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Notifications</h3>
+          <h3 className="sidebarTitle">Information</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
-              <BarChart className="sidebarIcon" />
-              Raporte
-            </li>
-            <li className="sidebarListItem">
-              <CarCrashIcon className="sidebarIcon" />
-              Demtimet
-            </li>
-            <li className="sidebarListItem">
               <DynamicFeed className="sidebarIcon" />
-              Vleresimet nga klientet
+              Reviews from customers
             </li>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Opsione</h3>
+          <h3 className="sidebarTitle">Options</h3>
           <ul className="sidebarList">
             <li onClick={returnToHomepage} className="sidebarListItem">
               <HomeIcon className="sidebarIcon" />
-              Return to HomePage without logging out
+              Return to Homepage
             </li>
             <li onClick={logOut} className="sidebarListItem">
               <LogoutIcon className="sidebarIcon" />

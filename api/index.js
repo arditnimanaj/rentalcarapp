@@ -373,6 +373,7 @@ app.post("/booking", async (req, res) => {
     price,
     bookedTimeSlots: { from, to },
     totalHours,
+    momentWhenBooked,
     extraInfo,
   } = req.body;
 
@@ -380,6 +381,7 @@ app.post("/booking", async (req, res) => {
     car,
     bookingUser,
     carOwner,
+    momentWhenBooked,
     price,
     bookedTimeSlots: { from, to },
     totalHours,
@@ -387,7 +389,6 @@ app.post("/booking", async (req, res) => {
   })
     .then((doc) => {
       res.json(doc);
-      console.log(doc);
     })
     .catch((err) => {
       throw err;
@@ -434,7 +435,10 @@ app.get("/admin-bookings", async (req, res) => {
       if (err) throw err;
       const { id } = userData;
 
-      const booking = await Booking.find({ carOwner: id }).populate("car");
+      const booking = await Booking.find({ carOwner: id })
+        .populate("car") // Populate the "car" field
+        .populate("bookingUser") // Populate the "bookingUser" field
+        .exec();
       // console.log(booking);
       res.json(booking);
     });

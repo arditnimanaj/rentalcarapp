@@ -138,10 +138,12 @@ function CustomizedMenus({ user }) {
             Admin Dashboard
           </MenuItem>
         </Link>
-        <MenuItem onClick={handleClose} disableRipple>
-          <CalendarTodayIcon />
-          My bookings
-        </MenuItem>
+        <Link to={"/mybookings"}>
+          <MenuItem onClick={handleClose} disableRipple>
+            <CalendarTodayIcon />
+            My bookings
+          </MenuItem>
+        </Link>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={logOutUser} disableRipple>
           <LogoutIcon />

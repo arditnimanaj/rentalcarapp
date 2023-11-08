@@ -41,7 +41,7 @@ function AboutComponent() {
             <p className="max-w-md text-gray-500">
               We understand that every journey is different. Select from hourly,
               daily, or weekly rentals to align with your specific plans and
-              budget."
+              budget.
             </p>
           </div>
           <div className="flex flex-col items-center gap-3">
