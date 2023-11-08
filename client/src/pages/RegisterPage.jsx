@@ -7,6 +7,8 @@ export default function RegisterPage() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isBusiness, setIsBusiness] = useState(false);
   const [isNewUser, setIsNewUser] = useState(true);
 
   async function registerUser(ev) {
@@ -58,6 +60,14 @@ export default function RegisterPage() {
               value={password}
               onChange={(ev) => setPassword(ev.target.value)}
             />
+            <span className="flex ml-1">Enter your phone number:</span>
+            <input
+              type="number"
+              className="w-full border shadow-sm rounded-xl p-2"
+              value={email}
+              onChange={(ev) => setEmail(ev.target.value)}
+            />
+
             <button className="flex bg-black mx-auto text-white font-bold p-3 rounded-xl hover:bg-cyan-900 mt-3">
               REGISTER
             </button>
