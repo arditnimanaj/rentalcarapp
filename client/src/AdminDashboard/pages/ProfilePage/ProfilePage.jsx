@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Form, Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -90,6 +91,7 @@ export default function ProfilePage() {
       const { data } = response;
       toast.info("You are updating your profile info!", {
         position: "top-center",
+        toastId: "customId",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,

@@ -66,9 +66,13 @@ export default function NewCar() {
       setAddedPhotos(data.addedPhotos);
 
       toast.info(
-        "You are editing " + data.brand + " me targa " + data.licensePlate,
+        "You are editing " +
+          data.brand +
+          " with license plate: " +
+          data.licensePlate,
         {
           position: "top-center",
+          toastId: "customId1",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -156,6 +160,7 @@ export default function NewCar() {
 
       //popup after adding new car
       toast.success("A new car has been added!", {
+        toastId: "customID2",
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -165,6 +170,7 @@ export default function NewCar() {
         progress: undefined,
         theme: "colored",
       });
+      navigate("/account/carlist");
     }
 
     //resetting form after submit

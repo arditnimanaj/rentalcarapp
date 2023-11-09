@@ -74,7 +74,7 @@ function MyBookings() {
     setIsModalVisible(false);
   };
   return (
-    <div className="mt-20">
+    <div className="mt-20 bg-gray-200 h-screen">
       <Modal
         title="Booking Details"
         visible={isModalVisible}
