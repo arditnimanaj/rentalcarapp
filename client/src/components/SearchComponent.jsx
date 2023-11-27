@@ -53,7 +53,7 @@ export default function SearchComponent() {
   };
 
   return (
-    <div className="flex mx-auto justify-between gap-4 border rounded-2xl  max-w-fit p-4 shadow-2xl shadow-cyan-950 ">
+    <div className="flex mx-auto justify-between gap-4 border rounded-2xl  max-w-fit p-4 shadow-2xl shadow-cyan-950 max-sm:flex-col max-sm:w-full max-sm:mx-3">
       <div className="flex flex-col">
         <span className="flex font-roboto font-bold items-center text-center mb-2 gap-1 uppercase">
           <svg

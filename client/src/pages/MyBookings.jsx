@@ -74,7 +74,7 @@ function MyBookings() {
     setIsModalVisible(false);
   };
   return (
-    <div className="mt-20 bg-gray-200 h-screen">
+    <div className="mt-20 bg-gray-200 h-screen max-sm:text-center max-sm:mx-auto w-full">
       <Modal
         title="Booking Details"
         visible={isModalVisible}
@@ -87,7 +87,7 @@ function MyBookings() {
       >
         {selectedBooking && (
           <div className="flex flex-col gap-2">
-            <div className="flex justify-between">
+            <div className="flex justify-between max-sm:flex-col-reverse">
               <p className="font-bold flex gap-2">
                 Car:{" "}
                 <p className="font-semibold text-red-400">
@@ -155,10 +155,10 @@ function MyBookings() {
         )}
       </Modal>
       {myBookings ? (
-        <div className="grid grid-cols-4 py-4 px-4  bg-gray-200">
+        <div className="grid grid-cols-1 py-4 px-4 lg:grid-cols-4 bg-gray-200 w-full">
           {myBookings.map((booking) => {
             return (
-              <div className="py-4">
+              <div className="py-4 max-sm:mx-auto">
                 <Card
                   key={booking.id}
                   onClick={() => showModal(booking)}

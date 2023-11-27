@@ -195,12 +195,12 @@ export default function CarPage() {
     <div className="">
       {carData ? (
         <div>
-          <div className="flex justify-between mt-16 px-8 py-8 bg-gray-200 min-h-screen">
-            <div className=" w-1/2">
+          <div className="flex justify-between mt-16 px-8 py-8 bg-gray-200 min-h-screen max-sm:flex-col max-sm:w-full">
+            <div className=" w-1/2 max-sm:w-full ">
               {/* <div className="flex justify-between mx-5 py-5"> */}
               <div className="justify-between py-4">
                 <div className="flex items-center gap-2 w-full">
-                  <div className="flex items-center mx-auto gap-2 border rounded-2xl bg-white p-3 shadow-md">
+                  <div className="flex items-center mx-auto gap-2 border rounded-2xl bg-white p-3 shadow-md ">
                     <h2 className="text-2xl font-bold mx-auto ">
                       {carData.brand} {carData.model}
                     </h2>
@@ -209,7 +209,7 @@ export default function CarPage() {
                     </h2>
                   </div>
                 </div>
-                <div className="flex w-[60%] mx-auto justify-between">
+                <div className="flex w-[60%] mx-auto justify-between max-sm:w-full">
                   <div className="flex flex-col gap-2 p-1">
                     {carData.gearbox === "manual" ? (
                       <div className="flex text-center items-center gap-2">
@@ -285,8 +285,8 @@ export default function CarPage() {
                 </div>
               </div>
 
-              <div className="px-2 py-2 border rounded-2xl bg-white shadow-lg mx-4 flex gap-3">
-                <div className="">
+              <div className="px-2 py-2 border rounded-2xl bg-white shadow-lg mx-4 flex gap-3 max-sm:flex-col">
+                <div className="max-sm:hidden">
                   <BusinessIcon
                     color="disabled"
                     fontSize="large"
@@ -393,7 +393,7 @@ export default function CarPage() {
               </div>
             </div>
 
-            <div className="w-1/2 relative">
+            <div className="w-1/2 relative max-sm:w-full">
               <div className="border rounded-2xl shadow-cyan-950 p-4 shadow-xl">
                 <div className="grid gap-3 grid-cols-[2fr_1fr] ">
                   <div
@@ -442,7 +442,7 @@ export default function CarPage() {
               </div>
               <button
                 onClick={() => setShowAllPhotos(true)}
-                className="flex gap-1 absolute bottom-[192px] right-6 py-2 px-4 bg-white rounded-2xl shadow-md shadow-gray-500"
+                className="flex gap-1 absolute bottom-[192px] right-6 py-2 px-4 bg-white rounded-2xl shadow-md shadow-gray-500 max-sm:hidden"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -467,7 +467,7 @@ export default function CarPage() {
             onOk={saveBooking}
             onCancel={handleCancel}
           >
-            <div className="flex flex-col gap-1 text-lg">
+            <div className="flex flex-col gap-1 text-lg max-sm:overflow-hidden">
               <p className="font-bold text-xl text-red-700">
                 Please double-check your booking information!
               </p>

@@ -34,8 +34,8 @@ export default function IndexPage() {
 
   return (
     <div className="" id="head">
-      <div className="flex items-center gap-2 justify-around my-20 p-4">
-        <div className="flex flex-col gap-2 text-center  text-cyan-950 items-center ">
+      <div className="flex items-center gap-2 justify-around my-20 p-4 max-sm:flex-col">
+        <div className="flex flex-col gap-2 text-center  text-cyan-950 items-center max-sm:w-full max-sm:flex">
           <span className="font-roboto  text-lg text-center">
             Rent your ride with{" "}
             <span className="font-bold text-xl">RentKOS</span> now.
@@ -73,7 +73,7 @@ export default function IndexPage() {
       <SearchComponent cars={randomCars} />
 
       {/* car logos */}
-      <div className="max-w-full flex justify-around p-2  opacity-20 my-10 ">
+      <div className="max-w-full flex justify-around p-2  opacity-20 my-10 max-sm:hidden ">
         <img src={bmwLogo} className="w-[120px] object-contain "></img>
         <img src={audiLogo} className="w-[120px] object-contain "></img>
         <img src={benzLogo} className="w-[120px] object-contain "></img>
@@ -98,7 +98,7 @@ export default function IndexPage() {
             />
           </div>
         ) : (
-          <div className=" m-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-2 justify-between">
+          <div className=" m-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5 p-2 justify-between sm:grid-cols-1">
             <CarCard cars={randomCars} />
           </div>
         )}

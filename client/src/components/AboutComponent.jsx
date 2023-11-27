@@ -20,7 +20,7 @@ function AboutComponent() {
             Quick & easy car rental platform
           </h1>
         </div>
-        <div className="justify-around text-center flex p-4 gap-16 m-3 items-center ">
+        <div className="justify-around text-center flex p-4 gap-16 m-3 items-center  max-sm:flex max-sm:flex-col">
           <div className="flex flex-col items-center gap-3">
             <img
               src={circle}
@@ -58,8 +58,8 @@ function AboutComponent() {
         <div className="text-center max-w-full items-center flex flex-col min-w-full">
           <h1 className="mx-auto font-bold text-4xl">For business owners</h1>
         </div>
-        <div className="justify-around text-center flex p-4 gap-16 m-3 items-center ">
-          <div className="flex flex-col items-center gap-3">
+        <div className="justify-around text-center flex p-4 gap-16 m-3 items-center max-sm:flex-col ">
+          <div className="flex flex-col items-center gap-3 ">
             <img
               src={key}
               className="relative w-[120px] text-center items-center flex"
@@ -99,12 +99,12 @@ function AboutComponent() {
         </div>
       </div>
 
-      <div className="my-4 h-[180px] bg-gray-900 w-full  flex flex-col text-center items-center ">
-        <p className=" items-center h-full flex gap-2 text-center text-6xl text-white font-bold ">
+      <div className="my-4 h-[180px] bg-gray-900 w-full  flex flex-col text-center items-center max-sm:h-full max-sm:py-4">
+        <p className=" items-center h-full flex gap-2 text-center text-6xl text-white font-bold max-sm:text-xl">
           Save your time & money with {"  "}
           <span className="text-[#d5a4a4]"> RentKOS</span>
         </p>
-        <p className="text-white font-semibold flex items-center h-full">
+        <p className="text-white font-semibold flex items-center h-full max-sm:text-md">
           In mostly every city of Kosove !
         </p>
       </div>
