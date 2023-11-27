@@ -89,10 +89,12 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Information</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <DynamicFeed className="sidebarIcon" />
-              Reviews from customers
-            </li>
+            <Link to={"/account/reviews/"} className="link">
+              <li className="sidebarListItem">
+                <DynamicFeed className="sidebarIcon" />
+                Reviews from customers
+              </li>
+            </Link>
           </ul>
         </div>
         <div className="sidebarMenu">

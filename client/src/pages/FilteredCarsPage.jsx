@@ -123,7 +123,17 @@ function FilteredCarsPage() {
       toDate: toDate,
     });
   }
-
+  function resetFilters() {
+    setSelectedPrice(null);
+    setSelectedSeats(null);
+    setSelectedFilters({
+      fuel: [],
+      type: [],
+      seats: [],
+      price: [],
+      gearbox: [],
+    });
+  }
   const [selectedFilters, setSelectedFilters] = useState({
     fromDate: fromDate,
     toDate: toDate,
@@ -297,7 +307,7 @@ function FilteredCarsPage() {
               Filter Cars
             </button>
             <button
-              onClick={filterCars}
+              onClick={resetFilters}
               className="flex mx-auto text-white font-bold border rounded-lg bg-red-500 hover:bg-gray-900 p-3 mt-4"
             >
               Reset Filters

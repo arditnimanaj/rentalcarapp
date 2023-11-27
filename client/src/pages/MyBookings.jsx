@@ -155,10 +155,10 @@ function MyBookings() {
         )}
       </Modal>
       {myBookings ? (
-        <div className="grid grid-cols-4 py-4 px-4">
+        <div className="grid grid-cols-4 py-4 px-4  bg-gray-200">
           {myBookings.map((booking) => {
             return (
-              <div>
+              <div className="py-4">
                 <Card
                   key={booking.id}
                   onClick={() => showModal(booking)}

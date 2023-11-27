@@ -29,9 +29,9 @@ app.use(
 
 mongoose.connect(process.env.MONGO_URL);
 
-app.get("/test", (req, res) => {
-  res.json("test ok");
-});
+// app.get("/test", (req, res) => {
+//   res.json("test ok");
+// });
 
 app.post("/register", async (req, res) => {
   const { userName, email, password, isNewUser } = req.body;
@@ -512,6 +512,17 @@ app.get("/my-bookings", async (req, res) => {
       const { id } = userData;
       const myBooking = await Booking.find({ bookingUser: id }).populate("car");
       res.json(myBooking);
+    });
+  } catch (err) {
+    throw err;
+  }
+});
+
+app.get("reviews", async (req, res) => {
+  try {
+    const { token } = req.cookies;
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+      if (err) throw err;
     });
   } catch (err) {
     throw err;

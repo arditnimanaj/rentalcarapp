@@ -1,11 +1,7 @@
 import * as React from "react";
-import "../CarsList/carslist.css";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
-import { Link, useParams } from "react-router-dom";
 import moment from "moment";
 import { pink } from "@mui/material/colors";
 import InfoIcon from "@mui/icons-material/Info";
