@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../../UserContext.jsx";
-import Home from "./Home/Home.jsx";
+import Home from "./Home/HomePage.jsx";
 
 export default function AccountDashboard() {
   const { user, setUser, ready } = useContext(UserContext);
