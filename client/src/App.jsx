@@ -16,7 +16,7 @@ import FilteredCarsPage from "./pages/FilteredCarsPage";
 import MyBookings from "./pages/MyBookings";
 import AdminReviews from "./AdminDashboard/pages/Reviews/AdminReviews";
 import AdminBookings from "./AdminDashboard/pages/Bookings/AdminBookings";
-axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
+axios.defaults.baseURL = "http://127.0.0.1:4000";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
           <Route path="/car/:id/:fromDate/:toDate" element={<CarPage />} />
         </Route>
         <Route path="/account/*" element={<AccountLayout />}>
-          <Route index element={<Home />} />
+          <Route path="" element={<Home />} />
           <Route path="carlist" element={<CarsList />} />
           <Route path="newcar" element={<NewCar />} />
           <Route path="profile" element={<ProfilePage />} />
