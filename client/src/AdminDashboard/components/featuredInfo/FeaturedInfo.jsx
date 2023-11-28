@@ -1,6 +1,6 @@
 import React from "react";
 import "./featuredInfo.css";
-import ArrowDownward from "@mui/icons-material/icons/ArrowDownward";
+import ArrowDownward from "@mui/icons-material/ArrowDownward";
 
 export default function FeaturedInfo() {
   return (
