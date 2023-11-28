@@ -5,12 +5,8 @@ import { MenuList } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import EditIcon from "@mui/icons-material/Edit";
 import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../UserContext";
 import axios from "axios";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -59,6 +55,7 @@ const StyledMenu = styled((props) => (
 }));
 
 function CustomizedMenus({ user }) {
+  const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);

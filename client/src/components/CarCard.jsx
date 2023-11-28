@@ -10,7 +10,6 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 import moment from "moment";
 function CarCard({ cars, fromDate, toDate }) {
   const { pathname } = useLocation();
-  const { navigate } = useNavigate();
   let subpage = pathname.split("/")?.[1];
 
   const difference = moment(toDate).diff(fromDate, "hours");

@@ -48,6 +48,8 @@ export default function CarPage() {
       alert(
         "Rezervimi juaj bie ne konflikt me rezervimet e tjera. Ju lutem zgjedhni data te tjera."
       );
+    } else if (!user) {
+      alert("You need to log in to make a booking!");
     } else {
       setIsModalOpen(true);
     }
@@ -195,7 +197,7 @@ export default function CarPage() {
     <div className="">
       {carData ? (
         <div>
-          <div className="flex justify-between mt-16 px-8 py-8 bg-gray-200 min-h-screen max-sm:flex-col max-sm:w-full">
+          <div className="flex justify-between mt-16 px-8 py-8 bg-gray-200 min-h-screen max-sm:flex-col-reverse max-sm:w-full">
             <div className=" w-1/2 max-sm:w-full ">
               {/* <div className="flex justify-between mx-5 py-5"> */}
               <div className="justify-between py-4">
