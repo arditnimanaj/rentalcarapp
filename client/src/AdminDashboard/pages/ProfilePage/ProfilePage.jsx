@@ -22,9 +22,6 @@ import {
 } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import ListItemText from "@mui/material/ListItemText";
-import Input from "@mui/material/Input";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
-import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const ITEM_HEIGHT = 48;
