@@ -38,7 +38,7 @@ function App() {
           <Route path="/car/:id/:fromDate/:toDate" element={<CarPage />} />
         </Route>
         <Route path="/account/*" element={<AccountLayout />}>
-          <Route path="" element={<Home />} />
+          <Route index element={<Home />} />
           <Route path="carlist" element={<CarsList />} />
           <Route path="newcar" element={<NewCar />} />
           <Route path="profile" element={<ProfilePage />} />
