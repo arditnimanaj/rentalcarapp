@@ -33,7 +33,7 @@ mongoose.connect(process.env.MONGO_URL);
 //   res.json("test ok");
 // });
 
-app.post("/register", async (req, res) => {
+app.post("/api/register", async (req, res) => {
   const { userName, email, password, isNewUser } = req.body;
   try {
     const userDoc = await User.create({
@@ -48,7 +48,7 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
   const userDoc = await User.findOne({ email });
   if (userDoc) {
@@ -74,7 +74,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/profile", (req, res) => {
+app.get("/api/profile", (req, res) => {
   const { token } = req.cookies;
   if (token) {
     jwt.verify(token, jwtSecret, {}, async (err, user) => {
@@ -108,7 +108,7 @@ app.get("/profile", (req, res) => {
   }
 });
 
-app.put("/update-profile", async (req, res) => {
+app.put("/api/update-profile", async (req, res) => {
   const { token } = req.cookies;
   const { businessName, phoneNumber, paymentMethods, pickupLocations } =
     req.body;
@@ -129,7 +129,7 @@ app.put("/update-profile", async (req, res) => {
   }
 });
 
-app.post("/logout", (req, res) => {
+app.post("/api/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });
 
@@ -168,7 +168,7 @@ app.post("/cars", (req, res) => {
   });
 });
 
-app.get("/user-carlist", (req, res) => {
+app.get("/api/user-carlist", (req, res) => {
   const { token } = req.cookies;
   jwt.verify(token, jwtSecret, {}, async (err, userData) => {
     if (err) throw err;
@@ -177,7 +177,7 @@ app.get("/user-carlist", (req, res) => {
   });
 });
 
-app.post("/upload-by-link", async (req, res) => {
+app.post("/api/upload-by-link", async (req, res) => {
   try {
     const { link } = req.body;
     const newName = "photo" + Date.now() + ".jpg";
@@ -192,7 +192,7 @@ app.post("/upload-by-link", async (req, res) => {
 });
 
 const photosMiddleware = multer({ dest: "uploads/" });
-app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
+app.post("/api/upload", photosMiddleware.array("photos", 100), (req, res) => {
   const uploadedFiles = [];
   for (let i = 0; i < req.files.length; i++) {
     const { path, originalname } = req.files[i];
@@ -205,12 +205,12 @@ app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
   res.json(uploadedFiles);
 });
 
-app.get("/user-carlist/:id", async (req, res) => {
+app.get("/api/user-carlist/:id", async (req, res) => {
   const { id } = req.params;
   res.json(await Car.findById(id));
 });
 
-app.put("/user-carlist", async (req, res) => {
+app.put("/api/user-carlist", async (req, res) => {
   const { token } = req.cookies;
   const {
     id,
@@ -250,7 +250,7 @@ app.put("/user-carlist", async (req, res) => {
   });
 });
 
-app.post("/filteredCars", async (req, res) => {
+app.post("/api/filteredCars", async (req, res) => {
   const {
     fromDate,
     toDate,
@@ -352,7 +352,7 @@ app.post("/filteredCars", async (req, res) => {
     });
 });
 
-app.get("/allCars/:id", async (req, res) => {
+app.get("/api/allCars/:id", async (req, res) => {
   const id = req.params.id;
   const carDoc = await Car.findById(id).populate("owner");
 
@@ -391,7 +391,7 @@ app.post("/booking", async (req, res) => {
     });
 });
 
-app.put("/update-booking", async (req, res) => {
+app.put("/api/update-booking", async (req, res) => {
   const { token } = req.cookies;
   const { starsReview, descriptionReview, bookingId } = req.body;
 
@@ -409,7 +409,7 @@ app.put("/update-booking", async (req, res) => {
   }
 });
 
-app.get("/get-review/:id", async (req, res) => {
+app.get("/api/get-review/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const reviewData = await Booking.findById(id);
@@ -420,7 +420,7 @@ app.get("/get-review/:id", async (req, res) => {
   }
 });
 
-app.get("/pickup-locations", async (req, res) => {
+app.get("/api/pickup-locations", async (req, res) => {
   try {
     // Fetch all users from the database.
     const users = await User.find({}, "pickupLocations");
@@ -443,7 +443,7 @@ app.get("/pickup-locations", async (req, res) => {
   }
 });
 
-app.get("/random-cars", async (req, res) => {
+app.get("/api/random-cars", async (req, res) => {
   try {
     const cars = await Car.aggregate([{ $sample: { size: 4 } }]); // This fetches 4 random cars from the collection
     res.json(cars);
@@ -453,7 +453,7 @@ app.get("/random-cars", async (req, res) => {
   }
 });
 
-app.get("/admin-bookings", async (req, res) => {
+app.get("/api/admin-bookings", async (req, res) => {
   try {
     const { token } = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -472,7 +472,7 @@ app.get("/admin-bookings", async (req, res) => {
   }
 });
 
-app.post("/deleteCar", async (req, res) => {
+app.post("/api/deleteCar", async (req, res) => {
   try {
     const { carId } = req.body;
     const { token } = req.cookies;
@@ -504,7 +504,7 @@ app.post("/deleteCar", async (req, res) => {
   }
 });
 
-app.get("/my-bookings", async (req, res) => {
+app.get("/api/my-bookings", async (req, res) => {
   try {
     const { token } = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
@@ -518,7 +518,7 @@ app.get("/my-bookings", async (req, res) => {
   }
 });
 
-app.get("reviews", async (req, res) => {
+app.get("/api/reviews", async (req, res) => {
   try {
     const { token } = req.cookies;
     jwt.verify(token, jwtSecret, {}, async (err, userData) => {
