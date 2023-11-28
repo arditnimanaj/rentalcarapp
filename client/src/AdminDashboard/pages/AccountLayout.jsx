@@ -1,5 +1,5 @@
 import React from "react";
-import Topbar from "../components/topbar/topbar.jsx";
+import Topbar from "../components/topbar/Topbar.jsx";
 import Sidebar from "../components/sidebar/Sidebar.jsx";
 import {
   Outlet,
