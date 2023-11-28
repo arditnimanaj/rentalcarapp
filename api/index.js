@@ -29,9 +29,9 @@ app.use(
 
 mongoose.connect(process.env.MONGO_URL);
 
-// app.get("/test", (req, res) => {
-//   res.json("test ok");
-// });
+app.get("/api/test", (req, res) => {
+  res.json("test ok");
+});
 
 app.post("/api/register", async (req, res) => {
   const { userName, email, password, isNewUser } = req.body;
