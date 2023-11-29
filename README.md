@@ -2,7 +2,7 @@
 
 
 RentKOS is a platform built on the MERN stack, allowing users to manage car rentals. It includes features like user authentication, booking system, reviews, and accounts for both personal and business use.
-[logo-no-background](https://github.com/arditnimanaj/rentalcarapp/assets/48659416/71541a40-73a7-4c6a-b97b-8bfd6fc90b2e)
+![logo-no-background](https://github.com/arditnimanaj/rentalcarapp/assets/48659416/71541a40-73a7-4c6a-b97b-8bfd6fc90b2e)
 
 ## Features!
 
