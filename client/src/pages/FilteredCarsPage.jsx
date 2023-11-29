@@ -162,12 +162,7 @@ function FilteredCarsPage() {
   };
   return (
     <div class="antialiased bg-gray-50 ">
-      <div
-        className="fixed top-20 left-10 z-40  shadow-2xl shadow-cyan-950 h-fit  my-4 md:translate-x-0 items-center text-center lg:transition-transform lg:-translate-x-full w-[280px] max-sm:relative max-sm:mx-auto max-sm:left-0"
-        // class="fixed top-0 left-3 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0  mt-4 items-center text-center"
-        // aria-label="Sidenav"
-        // id="drawer-navigation"
-      >
+      <div className="fixed top-0 left-3 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0  mt-4 items-center text-center  max-sm:mx-auto max-sm:left-0">
         <div class="overflow-y-auto py-5 px-3 h-full shadow-2xl items-center border rounded-xl">
           <div class="space-y-2 items-center">
             <ClockCircleTwoTone />
